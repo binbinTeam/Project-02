@@ -11,8 +11,8 @@
 package com.zhzteam.zhz233.common.utils;
 
 import com.zhzteam.zhz233.common.config.SMSConfig;
-import com.zhzteam.zhz233.model.CodeResult;
-import com.zhzteam.zhz233.model.SMSResult;
+import com.zhzteam.zhz233.model.zlb.CodeResult;
+import com.zhzteam.zhz233.model.zlb.SMSResult;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.BufferedReader;

@@ -1,7 +1,7 @@
 package com.zhzteam.zhz233.filter;
 
 import com.zhzteam.zhz233.common.utils.CookieUtils;
-import com.zhzteam.zhz233.service.RedisService;
+import com.zhzteam.zhz233.service.zlb.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;

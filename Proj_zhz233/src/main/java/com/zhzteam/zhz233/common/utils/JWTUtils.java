@@ -2,7 +2,7 @@ package com.zhzteam.zhz233.common.utils;
 
 import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import com.zhzteam.zhz233.common.config.JWTConfig;
-import com.zhzteam.zhz233.model.JWTResult;
+import com.zhzteam.zhz233.model.zlb.JWTResult;
 import io.jsonwebtoken.*;
 
 import javax.crypto.SecretKey;

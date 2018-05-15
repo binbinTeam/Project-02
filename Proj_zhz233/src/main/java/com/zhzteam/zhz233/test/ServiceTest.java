@@ -1,6 +1,6 @@
 package com.zhzteam.zhz233.test;
 
-import com.zhzteam.zhz233.service.RedisService;
+import com.zhzteam.zhz233.service.zlb.RedisService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

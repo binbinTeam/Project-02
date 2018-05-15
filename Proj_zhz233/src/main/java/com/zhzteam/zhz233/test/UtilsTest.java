@@ -4,7 +4,7 @@ import com.zhzteam.zhz233.common.utils.AutoIncUtils;
 import com.zhzteam.zhz233.common.utils.GsonUtils;
 import com.zhzteam.zhz233.common.utils.JWTUtils;
 import com.zhzteam.zhz233.model.JWTModel;
-import com.zhzteam.zhz233.model.JWTResult;
+import com.zhzteam.zhz233.model.zlb.JWTResult;
 import org.junit.Test;
 
 public class UtilsTest {
