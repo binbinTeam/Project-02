@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping(value = "/zlb")
 public class IndexController {
     @Autowired
     NoticeService noticeService;

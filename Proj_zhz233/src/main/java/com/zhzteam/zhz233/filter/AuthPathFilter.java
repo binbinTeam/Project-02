@@ -62,27 +62,27 @@ public class AuthPathFilter implements Filter {
         }
 
         if(servletPath.equals("/")){//访问 index
-            hsResponse.sendRedirect(hsRequest.getContextPath() + "/index");
+            hsResponse.sendRedirect(hsRequest.getContextPath() + "/zlb/index");
             return;
         }
 
-        if(servletPath.equals("/error")
-                || servletPath.equals("/index")
-                || servletPath.equals("/login")
-                || servletPath.equals("/register")
+        if(servletPath.equals("/zlb/error")
+                || servletPath.equals("/zlb/index")
+                || servletPath.equals("/zlb/login")
+                || servletPath.equals("/zlb/register")
                 ){//不过滤 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        if(servletPath.equals("/getIndexAutoInfo")
+        if(servletPath.equals("/zlb/getIndexAutoInfo")
                 ){//不过滤 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        if(servletPath.equals("/userBean/login")
-                || servletPath.equals("/userBean/register")
+        if(servletPath.equals("/zlb/userBean/login")
+                || servletPath.equals("/zlb/userBean/register")
                 ){//不过滤 登录 请求 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;
@@ -93,14 +93,18 @@ public class AuthPathFilter implements Filter {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             }else {
-                hsResponse.setCharacterEncoding("UTF-8");
-                hsResponse.sendError(HttpStatus.NOT_FOUND.value(),"用户未登录授权访问！");
+                hsResponse.sendRedirect(hsRequest.getContextPath() + "/zlb/login");
                 return;
+                /*hsResponse.setCharacterEncoding("UTF-8");
+                hsResponse.sendError(HttpStatus.NOT_FOUND.value(),"用户未登录授权访问！");
+                return;*/
             }
         }else{
-            hsResponse.setCharacterEncoding("UTF-8");
-            hsResponse.sendError(HttpStatus.NOT_FOUND.value(),"用户未登录授权访问！");
+            hsResponse.sendRedirect(hsRequest.getContextPath() + "/zlb/login");
             return;
+            /*hsResponse.setCharacterEncoding("UTF-8");
+            hsResponse.sendError(HttpStatus.NOT_FOUND.value(),"用户未登录授权访问！");
+            return;*/
         }
     }
 

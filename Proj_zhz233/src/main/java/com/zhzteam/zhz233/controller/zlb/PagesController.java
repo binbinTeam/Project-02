@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/BS")
+@RequestMapping(value = "/zlb/FB")
 public class PagesController {
 
     @RequestMapping("/index")

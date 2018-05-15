@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@RequestMapping(value = "/zlb")
 public class UserBeanController {
     @Autowired
     RedisService redisService;
@@ -230,5 +231,21 @@ public class UserBeanController {
             resultView.setMessage("登录信息错误！");
         }
         return resultView;
+    }
+
+    @RequestMapping("/login")
+    public PathResult login(){
+        PathResult pathResult = new PathResult();
+        pathResult.setPath("/login");
+        pathResult.setStatus(StatusConfig.SUCCESS);
+        return pathResult;
+    }
+
+    @RequestMapping("/register")
+    public PathResult register(){
+        PathResult pathResult = new PathResult();
+        pathResult.setPath("/register");
+        pathResult.setStatus(StatusConfig.SUCCESS);
+        return pathResult;
     }
 }
