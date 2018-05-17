@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhzteam.zhz233.mapper.zlb.GoodsMapper">
+    <!--selectTByKey-->
+    <sql id="selectTByKey">
+        select tab_goods.goods_no,tab_goods.goods_amount,
+          tab_user.account as 'account',tab_goods.goods_game,
+          tab_goods.goods_theme,tab_goods.goods_content,
+          tab_goods.goods_type,tab_goods.goods_recomm,
+          tab_goods.create_time
+        from tab_goods,tab_user
+    </sql>
+    <!--selectTByKey-->
+    <select id="selectTByKey" resultType="com.zhzteam.zhz233.model.zlb.GoodsResult">
+        <include refid="selectTByKey"/>
+        where tab_goods.account_no = tab_user.account_no
+        and goods_type =#{goodstype}
+        and goods_recomm =#{goodsrecomm}
+        and goods_status =#{goodsstatus}
+        order by tab_goods.create_time desc
+        limit #{pagesize}
+    </select>
+</mapper>

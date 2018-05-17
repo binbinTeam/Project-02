@@ -2,7 +2,7 @@ package com.zhzteam.zhz233.model.zlb;
 
 import java.io.Serializable;
 
-public class LogonResult implements Serializable {
+public class UserResult implements Serializable {
     private String account_no;//编号
     private String account;//账号
     private String cell_phone;//绑定号码

@@ -6,12 +6,10 @@ import java.util.Date;
 public class LeaseResult implements Serializable {
     private String order_no;//订单编号 03
     private String goods_no;//商品编号
-    private String account;//商家编号
-    private String buyer;//购买者编号
+    private String account;//商家
+    private String buyer;//购买者
     private Double order_amount;//总价格
-    private Date order_start_time;//订单开始时间
-    private Date order_end_time;//订单结束时间
-    private Integer order_state;//订单状态（0/等待付款 1/订单失败 2/完成订单 3/订单失效 4/订单进行中）
+    private Integer order_time;//时间（小时）
     private Date create_time;
 
     public String getOrder_no() {
@@ -54,28 +52,12 @@ public class LeaseResult implements Serializable {
         this.order_amount = order_amount;
     }
 
-    public Date getOrder_start_time() {
-        return order_start_time;
+    public Integer getOrder_time() {
+        return order_time;
     }
 
-    public void setOrder_start_time(Date order_start_time) {
-        this.order_start_time = order_start_time;
-    }
-
-    public Date getOrder_end_time() {
-        return order_end_time;
-    }
-
-    public void setOrder_end_time(Date order_end_time) {
-        this.order_end_time = order_end_time;
-    }
-
-    public Integer getOrder_state() {
-        return order_state;
-    }
-
-    public void setOrder_state(Integer order_state) {
-        this.order_state = order_state;
+    public void setOrder_time(Integer order_time) {
+        this.order_time = order_time;
     }
 
     public Date getCreate_time() {

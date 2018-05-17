@@ -3,17 +3,19 @@
 <mapper namespace="com.zhzteam.zhz233.mapper.zlb.LeaseMapper">
     <!--selectTByKey-->
     <sql id="selectTByKey">
-        SELECT order_no,goods_no,
-        (select account from tab_user
-        where tab_user.account_no = tab_lease_order.account_no) as 'account',
-        (select account from tab_user,tab_lease_order
-        where tab_user.account_no = tab_lease_order.buyer_no)as 'buyer',
-        order_amount,order_start_time,order_end_time,order_state,create_time
-        FROM tab_lease_order
+        SELECT order_no,goods_no,tab_user.account,
+          (select distinct account from tab_user,tab_lease_order
+          where tab_lease_order.buyer_no = tab_user.account_no)as 'buyer',
+          order_amount,
+          timestampdiff(hour,order_start_time,order_end_time) as 'order_time',
+          tab_lease_order.create_time
+        FROM tab_lease_order,tab_user
     </sql>
     <!--selectTByKey-->
     <select id="selectTByKey" resultType="com.zhzteam.zhz233.model.zlb.LeaseResult">
         <include refid="selectTByKey"/>
+        where tab_user.account_no = tab_lease_order.account_no
+        and order_state = 2
         order by create_time desc
         limit #{pagesize}
     </select>

@@ -1,11 +1,9 @@
 package com.zhzteam.zhz233.controller.zlb;
 
 import com.zhzteam.zhz233.common.config.StatusConfig;
-import com.zhzteam.zhz233.model.zlb.BlacklistResult;
-import com.zhzteam.zhz233.model.zlb.NoticeResult;
-import com.zhzteam.zhz233.model.zlb.PathResult;
-import com.zhzteam.zhz233.model.zlb.ResultView;
+import com.zhzteam.zhz233.model.zlb.*;
 import com.zhzteam.zhz233.service.zlb.BlacklistService;
+import com.zhzteam.zhz233.service.zlb.LeaseService;
 import com.zhzteam.zhz233.service.zlb.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,19 +22,24 @@ public class IndexController {
     NoticeService noticeService;
     @Autowired
     BlacklistService blacklistService;
+    @Autowired
+    LeaseService leaseService;
 
     private ResultView resultView;
 
     private List<NoticeResult> noticeResultList;
     private List<BlacklistResult> blacklistResultList;
+    private List<LeaseResult> leaseResultList;
 
     private Map<String,Object> reMap;
 
-    @RequestMapping(value = "/getIndexAutoInfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/getIndexAutoInfo")
     public ResultView getIndexInfo(){
         //初始化 容器
         resultView = new ResultView();
         noticeResultList = new ArrayList<NoticeResult>();
+        blacklistResultList = new ArrayList<BlacklistResult>();
+        leaseResultList = new ArrayList<LeaseResult>();
         reMap = new HashMap<String, Object>();
         //公告活动
         noticeResultList = noticeService.selectTByKey(1,1,5);
@@ -48,8 +51,11 @@ public class IndexController {
         noticeResultList = noticeService.selectTByKey(3,1,5);
         reMap.put("updateList",noticeResultList);
         //获取黑名单
-        blacklistResultList = blacklistService.selectTByKey(5);
+        blacklistResultList = blacklistService.selectTByKey(6);
         reMap.put("blackList",blacklistResultList);
+        //获取展示订单
+        leaseResultList = leaseService.selectTByKey(6);
+        reMap.put("leaseList",leaseResultList);
         if(!reMap.isEmpty()){
                 resultView.setReMap(reMap);
                 resultView.setStatus(StatusConfig.SUCCESS);

@@ -2,7 +2,7 @@ package com.zhzteam.zhz233.model.zlb;
 
 import java.io.Serializable;
 
-public class LoginInfo implements Serializable{
+public class UserInfo implements Serializable{
     /**
      * 用户名
      */

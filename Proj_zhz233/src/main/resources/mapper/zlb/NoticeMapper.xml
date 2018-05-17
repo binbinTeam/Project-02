@@ -9,7 +9,8 @@
     <!--selectTByKey-->
     <select id="selectTByKey" resultType="com.zhzteam.zhz233.model.zlb.NoticeResult">
         <include refid="selectTByKey"/>
-        where notice_type = #{noticetype} and notice_recomm = #{noticerecomm}
+        where notice_type = #{noticetype}
+        and notice_recomm = #{noticerecomm}
         order by create_time desc
         limit #{pagesize}
     </select>

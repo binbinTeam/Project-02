@@ -1,19 +1,19 @@
 package com.zhzteam.zhz233.mapper.zlb;
 
-import com.zhzteam.zhz233.model.zlb.LogonResult;
+import com.zhzteam.zhz233.model.zlb.UserResult;
 import org.apache.ibatis.annotations.Param;
 
-public interface UserBeanMapper {
+public interface UserMapper {
     /**
-     * 判断 用户信息 是否有效 返回 LogonResult
+     * 判断 用户信息 是否有效 返回 UserResult
      * @param username
      * @param password
      * @return
      */
-    public LogonResult selectTByKey(@Param("username") String username, @Param("password") String password);
+    public UserResult selectTByKey(@Param("username") String username, @Param("password") String password);
 
     /**
-     * 添加 用户信息 是否有效 返回 LogonResult
+     * 添加 用户信息 是否有效 返回 UserResult
      * @param username
      * @param cellphone
      * @param password
@@ -44,4 +44,11 @@ public interface UserBeanMapper {
      * @return
      */
     public String selectTByAuto();
+
+    /**
+     * 获取 UserResult
+     * @param no
+     * @return
+     */
+    public UserResult selectTByNo(@Param("no") String no);
 }

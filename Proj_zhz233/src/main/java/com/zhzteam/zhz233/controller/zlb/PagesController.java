@@ -26,5 +26,4 @@ public class PagesController {
     public ModelAndView error() {
         return new ModelAndView("FS/error");
     }
-
 }

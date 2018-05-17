@@ -38,73 +38,66 @@ public class AuthPathFilter implements Filter {
          */
         String requestType = hsRequest.getHeader("X-Requested-With");
         /**
-         * 获取cookie uid
+         * 获取uid
          */
-        Cookie cookie = CookieUtils.getCookieByName(hsRequest,"uid");
+        String uid = hsRequest.getParameter("uid");
         /**
          * 过滤url
          */
         System.err.println(servletPath);
 
-        if(servletPath.endsWith(".ico")
-                || servletPath.endsWith(".png")
-                || servletPath.endsWith(".gif")
-                || servletPath.endsWith(".css")
-                || servletPath.endsWith(".map")
-                || servletPath.endsWith(".otf")
-                || servletPath.endsWith(".eot")
-                || servletPath.endsWith(".svg")
-                || servletPath.endsWith(".ttf")
-                || servletPath.endsWith(".woff")
-                || servletPath.endsWith(".woff2")){//不过滤 文件夹
+        if (servletPath.endsWith(".ico") || servletPath.endsWith(".png") || servletPath.endsWith(".gif") || servletPath.endsWith(".css") || servletPath.endsWith(".map") || servletPath.endsWith(".otf") || servletPath.endsWith(".eot") || servletPath.endsWith(".svg") || servletPath.endsWith(".ttf") || servletPath.endsWith(".woff") || servletPath.endsWith(".woff2")) {//不过滤 文件夹
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        if(servletPath.equals("/")){//访问 index
+        if (servletPath.equals("/")) {//访问 index
             hsResponse.sendRedirect(hsRequest.getContextPath() + "/zlb/index");
             return;
         }
 
-        if(servletPath.equals("/zlb/error")
-                || servletPath.equals("/zlb/index")
-                || servletPath.equals("/zlb/login")
-                || servletPath.equals("/zlb/register")
-                ){//不过滤 url
+        if (servletPath.equals("/zlb/FB/error") || servletPath.equals("/zlb/index") || servletPath.equals("/zlb/login") || servletPath.equals("/zlb/register")) {//不过滤 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        if(servletPath.equals("/zlb/getIndexAutoInfo")
-                ){//不过滤 url
+        if (servletPath.equals("/zlb/getIndexAutoInfo")
+                || servletPath.equals("/zlb/getTasteAutoInfo")
+                || servletPath.equals("/zlb/getGoodsInfo")
+                || servletPath.equals("/zlb/getGoodsRentInfo")
+                || servletPath.equals("/zlb/getGoodsTasteRentInfo")
+                ) {//不过滤 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        if(servletPath.equals("/zlb/userBean/login")
+        if (servletPath.equals("/zlb/userBean/login")
                 || servletPath.equals("/zlb/userBean/register")
-                ){//不过滤 登录 请求 url
+                || servletPath.equals("/zlb/userBean/getUserInfo")
+                || servletPath.equals("/zlb/userBean/checkCellPhone")
+                || servletPath.equals("/zlb/userBean/checkUserName")
+                || servletPath.equals("/zlb/userBean/checkCode")
+                || servletPath.equals("/zlb/userBean/getCode")
+                ) {//不过滤 登录 请求 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
 
-        if(cookie != null){
-            if(redisService.exist(cookie.getValue())){
+        if (!uid.isEmpty()) {
+            if (redisService.exist(uid)) {
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
-            }else {
-                hsResponse.sendRedirect(hsRequest.getContextPath() + "/zlb/login");
+            } else {
+                hsResponse.setCharacterEncoding("UTF-8");
+                hsResponse.sendError(HttpStatus.NOT_FOUND.value(), "访问错误！");
+                //hsResponse.sendRedirect(hsRequest.getContextPath() + "/zlb/login");
                 return;
-                /*hsResponse.setCharacterEncoding("UTF-8");
-                hsResponse.sendError(HttpStatus.NOT_FOUND.value(),"用户未登录授权访问！");
-                return;*/
             }
-        }else{
-            hsResponse.sendRedirect(hsRequest.getContextPath() + "/zlb/login");
+        } else {
+            hsResponse.setCharacterEncoding("UTF-8");
+            hsResponse.sendError(HttpStatus.NOT_FOUND.value(), "访问错误！");
+            //hsResponse.sendRedirect(hsRequest.getContextPath() + "/zlb/login");
             return;
-            /*hsResponse.setCharacterEncoding("UTF-8");
-            hsResponse.sendError(HttpStatus.NOT_FOUND.value(),"用户未登录授权访问！");
-            return;*/
         }
     }
 
