@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/zlb")
-public class LeaseController {
+public class LeaseOrderController {
 }

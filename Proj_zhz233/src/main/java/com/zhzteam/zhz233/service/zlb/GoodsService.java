@@ -18,4 +18,9 @@ public class GoodsService implements GoodsServiceImpl {
     public List<GoodsResult> selectTByKey(Integer goodstype, Integer goodsrecomm, Integer goodsstatus, Integer pagesize) {
         return goodsMapper.selectTByKey(goodstype, goodsrecomm, goodsstatus, pagesize);
     }
+
+    @Override
+    public Integer selectRentTotal(Integer goodstype,Integer goodsstatus) {
+        return goodsMapper.selectRentTotal(goodstype,goodsstatus);
+    }
 }

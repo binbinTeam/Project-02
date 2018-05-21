@@ -63,9 +63,10 @@ public class AuthPathFilter implements Filter {
 
         if (servletPath.equals("/zlb/getIndexAutoInfo")
                 || servletPath.equals("/zlb/getTasteAutoInfo")
-                || servletPath.equals("/zlb/getGoodsInfo")
-                || servletPath.equals("/zlb/getGoodsRentInfo")
-                || servletPath.equals("/zlb/getGoodsTasteRentInfo")
+                || servletPath.equals("/zlb/getDealAutoInfo")
+                || servletPath.equals("/zlb/getDealSearchInfo")
+                || servletPath.equals("/zlb/getGamesServer")
+                || servletPath.equals("/zlb/getGamesArea")
                 ) {//不过滤 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;

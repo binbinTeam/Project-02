@@ -3,7 +3,7 @@ package com.zhzteam.zhz233.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class LeaseModel implements Serializable {
+public class LeaseOrderModel implements Serializable {
     private Long id;
     private String order_no;//订单编号 03
     private String goods_no;//商品编号

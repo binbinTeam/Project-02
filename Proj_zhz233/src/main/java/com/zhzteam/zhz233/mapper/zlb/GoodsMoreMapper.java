@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface GoodsRentMoreMapper {
+public interface GoodsMoreMapper {
     /**
      * 返回 List<GoodsRentResult> Limit N
      * @param goodstype

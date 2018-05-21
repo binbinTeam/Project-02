@@ -20,5 +20,31 @@ public interface GamesMapper {
      * @return
      */
     public List<GamesResult> selectTByHotKey(@Param("pagesize") Integer pagesize);
+    /**
+     * 返回 List<GamesResult> Limit N
+     * @param pagesize
+     * @return
+     */
+    public List<GamesResult> selectTByListKey(@Param("pagesize") Integer pagesize);
 
+    /**
+     * 游戏名 列表
+     * @param pagesize
+     * @return
+     */
+    public List<String> selectTByListName(@Param("pagesize") Integer pagesize);
+
+    /**
+     * 服务器 列表
+     * @param gamesName
+     * @return
+     */
+    public List<String> selectTByListServer(@Param("gamesName") String gamesName);
+
+    /**
+     * 大区 列表
+     * @param serverName
+     * @return
+     */
+    public List<String> selectTByListArea(@Param("gamesName") String gamesName, @Param("serverName") String serverName);
 }

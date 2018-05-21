@@ -183,7 +183,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userBean/register")
-    public ResultView register(HttpServletRequest hsRequest, HttpServletResponse hsResponse,@RequestBody RegisterInfo registerInfo) {
+    public ResultView register(HttpServletRequest hsRequest,@RequestBody RegisterInfo registerInfo) {
         HttpSession httpSession = hsRequest.getSession();
         //初始化对象
         resultView = new ResultView();
@@ -269,7 +269,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userBean/login")
-    public ResultView logon(HttpServletRequest hsRequest, HttpServletResponse hsResponse,@RequestBody UserInfo userInfo){
+    public ResultView logon(HttpServletRequest hsRequest, @RequestBody UserInfo userInfo){
         HttpSession httpSession = hsRequest.getSession();
         //初始化对象
         resultView = new ResultView();

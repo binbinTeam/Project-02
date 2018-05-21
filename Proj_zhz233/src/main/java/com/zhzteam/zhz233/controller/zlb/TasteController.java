@@ -37,13 +37,16 @@ public class TasteController {
         goodsResultList = new ArrayList<GoodsResult>();
         reMap = new HashMap<String, Object>();
 
-        //放置 特价体验 游戏信息 端游
+        //放置 特价体验 游戏信息 热游
         gamesResultList = gamesService.selectTByHotKey(8);
         reMap.put("HOTgamesResultList",gamesResultList);
+        //放置 特价体验 游戏信息 端游
         gamesResultList = gamesService.selectTByKey(1,8);
         reMap.put("DYgamesResultList",gamesResultList);
+        //放置 特价体验 游戏信息 页游
         gamesResultList = gamesService.selectTByKey(2,8);
         reMap.put("YYgamesResultList",gamesResultList);
+        //放置 特价体验 游戏信息 手游
         gamesResultList = gamesService.selectTByKey(3,8);
         reMap.put("SYgamesResultList",gamesResultList);
         //放置 特价体验 商品信息
@@ -56,26 +59,6 @@ public class TasteController {
         }else{
             resultView.setStatus(StatusConfig.FAIL);
             resultView.setMessage("获取体验商品信息失败！");
-        }
-        return resultView;
-    }
-
-    @RequestMapping(value = "/getGoodsTasteRentInfo")
-    public ResultView getGoodsTasteRentInfo(){
-        //初始化 容器
-        resultView = new ResultView();
-        goodsResultList = new ArrayList<GoodsResult>();
-        reMap = new HashMap<String, Object>();
-        //放置 特价体验 商品信息
-        goodsResultList = goodsService.selectTByKey(4,0,0,10);
-        reMap.put("goodsResultList",goodsResultList);
-        if(!reMap.isEmpty()){
-            resultView.setReMap(reMap);
-            resultView.setStatus(StatusConfig.SUCCESS);
-            resultView.setMessage("获取特价体验出租商品信息成功！");
-        }else{
-            resultView.setStatus(StatusConfig.FAIL);
-            resultView.setMessage("获取特价体验出租商品信息失败！");
         }
         return resultView;
     }

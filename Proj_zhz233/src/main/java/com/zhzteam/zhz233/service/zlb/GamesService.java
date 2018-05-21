@@ -24,4 +24,24 @@ public class GamesService implements GamesServiceImpl {
     public List<GamesResult> selectTByHotKey(Integer pagesize) {
         return gamesMapper.selectTByHotKey(pagesize);
     }
+
+    @Override
+    public List<GamesResult> selectTByListKey(Integer pagesize) {
+        return gamesMapper.selectTByListKey(pagesize);
+    }
+
+    @Override
+    public List<String> selectTByListName(Integer pagesize) {
+        return gamesMapper.selectTByListName(pagesize);
+    }
+
+    @Override
+    public List<String> selectTByListServer(String gamesName) {
+        return gamesMapper.selectTByListServer(gamesName);
+    }
+
+    @Override
+    public List<String> selectTByListArea(String gamesName, String serverName) {
+        return gamesMapper.selectTByListArea(gamesName, serverName);
+    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zhzteam.zhz233.mapper.zlb.LeaseMapper">
+<mapper namespace="com.zhzteam.zhz233.mapper.zlb.LeaseOrderMapper">
     <!--selectTByKey-->
     <sql id="selectTByKey">
         SELECT order_no,goods_no,tab_user.account,
@@ -12,7 +12,7 @@
         FROM tab_lease_order,tab_user
     </sql>
     <!--selectTByKey-->
-    <select id="selectTByKey" resultType="com.zhzteam.zhz233.model.zlb.LeaseResult">
+    <select id="selectTByKey" resultType="com.zhzteam.zhz233.model.zlb.LeaseOrderResult">
         <include refid="selectTByKey"/>
         where tab_user.account_no = tab_lease_order.account_no
         and order_state = 2

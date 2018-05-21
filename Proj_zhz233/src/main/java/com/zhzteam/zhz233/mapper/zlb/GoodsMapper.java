@@ -16,5 +16,12 @@ public interface GoodsMapper {
      */
     public List<GoodsResult> selectTByKey(@Param("goodstype") Integer goodstype, @Param("goodsrecomm") Integer goodsrecomm, @Param("goodsstatus") Integer goodsstatus, @Param("pagesize") Integer pagesize);
 
-    public List<String> selectSByKey(@Param("goodstype") Integer goodstype, @Param("goodsstatus") Integer goodsstatus, @Param("pagesize") Integer pagesize);
+    /**
+     * 返回商品 总数
+     * @param goodsstatus
+     * @return
+     */
+    public Integer selectRentTotal(@Param("goodstype")Integer goodstype, @Param("goodsstatus") Integer goodsstatus);
+
+
 }

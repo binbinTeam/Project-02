@@ -3,7 +3,7 @@ package com.zhzteam.zhz233.model.zlb;
 import java.io.Serializable;
 import java.util.Date;
 
-public class LeaseResult implements Serializable {
+public class LeaseOrderResult implements Serializable {
     private String order_no;//订单编号 03
     private String goods_no;//商品编号
     private String account;//商家

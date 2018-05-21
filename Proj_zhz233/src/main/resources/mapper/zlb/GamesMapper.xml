@@ -18,4 +18,31 @@
         order by games_recomm desc
         limit #{pagesize}
     </select>
+    <select id="selectTByListKey" resultType="com.zhzteam.zhz233.model.zlb.GamesResult">
+        <include refid="selectTByKey"/>
+        order by games_recomm desc
+        limit #{pagesize}
+    </select>
+    <!--selectTByListName-->
+    <select id="selectTByListName" resultType="java.lang.String">
+        select node_name from tab_games_node where node_level = 1 limit #{pagesize}
+    </select>
+    <!--selectTByListServer-->
+    <select id="selectTByListServer" resultType="java.lang.String">
+        select node_name
+        from tab_games_node
+        where node_no = (
+          select id
+          from tab_games_node
+          where node_name = #{gamesName} and node_level = 1
+        )
+    </select>
+    <!--selectTByListArea-->
+    <select id="selectTByListArea" resultType="java.lang.String">
+        select node_name from tab_games_node where node_no =(
+        select id from tab_games_node where node_name = #{serverName} and node_no = (
+          select id from tab_games_node where node_name = #{gamesName} and node_level = 1
+        ) and node_level = 2
+        )
+    </select>
 </mapper>

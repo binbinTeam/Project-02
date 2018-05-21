@@ -2,7 +2,7 @@ package com.zhzteam.zhz233.model;
 
 import java.io.Serializable;
 
-public class GoodsRentMoreModel implements Serializable {
+public class GoodsMoreModel implements Serializable {
     private Long id;
     private String goods_no;
     private String goods_game;

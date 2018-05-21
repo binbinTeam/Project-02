@@ -3,11 +3,10 @@ package com.zhzteam.zhz233.controller.zlb;
 import com.zhzteam.zhz233.common.config.StatusConfig;
 import com.zhzteam.zhz233.model.zlb.*;
 import com.zhzteam.zhz233.service.zlb.BlacklistService;
-import com.zhzteam.zhz233.service.zlb.LeaseService;
+import com.zhzteam.zhz233.service.zlb.LeaseOrderService;
 import com.zhzteam.zhz233.service.zlb.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -23,13 +22,13 @@ public class IndexController {
     @Autowired
     BlacklistService blacklistService;
     @Autowired
-    LeaseService leaseService;
+    LeaseOrderService leaseService;
 
     private ResultView resultView;
 
     private List<NoticeResult> noticeResultList;
     private List<BlacklistResult> blacklistResultList;
-    private List<LeaseResult> leaseResultList;
+    private List<LeaseOrderResult> leaseOrderResultList;
 
     private Map<String,Object> reMap;
 
@@ -39,7 +38,7 @@ public class IndexController {
         resultView = new ResultView();
         noticeResultList = new ArrayList<NoticeResult>();
         blacklistResultList = new ArrayList<BlacklistResult>();
-        leaseResultList = new ArrayList<LeaseResult>();
+        leaseOrderResultList = new ArrayList<LeaseOrderResult>();
         reMap = new HashMap<String, Object>();
         //公告活动
         noticeResultList = noticeService.selectTByKey(1,1,5);
@@ -54,8 +53,8 @@ public class IndexController {
         blacklistResultList = blacklistService.selectTByKey(6);
         reMap.put("blackList",blacklistResultList);
         //获取展示订单
-        leaseResultList = leaseService.selectTByKey(6);
-        reMap.put("leaseList",leaseResultList);
+        leaseOrderResultList = leaseService.selectTByKey(6);
+        reMap.put("leaseList", leaseOrderResultList);
         if(!reMap.isEmpty()){
                 resultView.setReMap(reMap);
                 resultView.setStatus(StatusConfig.SUCCESS);

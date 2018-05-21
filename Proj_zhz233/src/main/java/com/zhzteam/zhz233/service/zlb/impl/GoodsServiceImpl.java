@@ -11,4 +11,10 @@ public interface GoodsServiceImpl {
      * @return
      */
     public List<GoodsResult> selectTByKey(Integer goodstype, Integer goodsrecomm, Integer goodsstatus, Integer pagesize);
+    /**
+     * 返回租号商品 总数
+     * @param goodsstatus
+     * @return
+     */
+    public Integer selectRentTotal(Integer goodstype, Integer goodsstatus);
 }
