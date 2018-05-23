@@ -84,6 +84,12 @@ public class AuthPathFilter implements Filter {
             return;
         }
 
+        if (servletPath.indexOf("/wlh") != -1
+                ) {//PC客户端不过滤URL
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
         if (!uid.isEmpty()) {
             if (redisService.exist(uid)) {
                 filterChain.doFilter(servletRequest, servletResponse);
