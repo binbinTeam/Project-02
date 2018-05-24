@@ -9,6 +9,7 @@ import com.zhzteam.zhz233.service.wlh.PCBoardService;
 import com.zhzteam.zhz233.service.wlh.PCReplyService;
 import com.zhzteam.zhz233.service.wlh.PCUserService;
 import com.zhzteam.zhz233.service.zlb.RedisService;
+import com.zhzteam.zhz233.service.zlb.impl.RedisServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ public class PCBBSControlleer {
     @Autowired
     PCBBSService bbsService;
     @Autowired
-    RedisService redisService;
+    RedisServiceImpl redisService;
     @Autowired
     PCUserService userService;
     @Autowired
