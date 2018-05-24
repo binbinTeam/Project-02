@@ -30,6 +30,7 @@ import java.util.Map;
  * @创建时间 2018/5/23
  */
 @RestController
+@RequestMapping(value = "/wlh")
 public class PCBBSControlleer {
     @Autowired
     PCBBSService bbsService;
