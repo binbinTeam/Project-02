@@ -1,16 +1,13 @@
 package com.zhzteam.zhz233.controller.zlb;
 
 import com.zhzteam.zhz233.common.config.StatusConfig;
-import com.zhzteam.zhz233.model.zlb.GoodsRentResult;
 import com.zhzteam.zhz233.model.zlb.GoodsResult;
 import com.zhzteam.zhz233.model.zlb.ResultView;
-import com.zhzteam.zhz233.service.zlb.GoodsService;
+import com.zhzteam.zhz233.service.zlb.impl.GoodsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +17,7 @@ import java.util.Map;
 @RequestMapping(value = "/zlb")
 public class GoodsController {
     @Autowired
-    GoodsService goodsService;
+    GoodsServiceImpl goodsServiceImpl;
 
     private ResultView resultView;
     private List<GoodsResult> goodsResultList;
@@ -34,7 +31,7 @@ public class GoodsController {
         goodsResultList = new ArrayList<GoodsResult>();
         reMap = new HashMap<String, Object>();
         //放置商品信息
-        goodsResultList = goodsService.selectTByKey(0,0,0,10);
+        goodsResultList = goodsServiceImpl.selectTByKey(0,0,0,10);
         reMap.put("goodsResultList",goodsResultList);
         if(!reMap.isEmpty()){
             resultView.setReMap(reMap);

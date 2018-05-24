@@ -26,4 +26,16 @@ public class PagesController {
     public ModelAndView error() {
         return new ModelAndView("FS/error");
     }
+
+    @RequestMapping("/download")
+    @ResponseBody
+    public ModelAndView download() {
+        return new ModelAndView("FS/download");
+    }
+
+    @RequestMapping("/upload")
+    @ResponseBody
+    public ModelAndView upload() {
+        return new ModelAndView("FS/upload");
+    }
 }

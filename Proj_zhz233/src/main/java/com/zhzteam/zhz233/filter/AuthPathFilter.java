@@ -1,7 +1,6 @@
 package com.zhzteam.zhz233.filter;
 
-import com.zhzteam.zhz233.common.utils.CookieUtils;
-import com.zhzteam.zhz233.service.zlb.RedisService;
+import com.zhzteam.zhz233.service.zlb.impl.RedisServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -9,16 +8,15 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Order(Integer.MAX_VALUE - 1)
+@Order(Integer.MAX_VALUE)
 @WebFilter(urlPatterns = "/*",filterName = "AuthPathFilter")
 public class AuthPathFilter implements Filter {
     @Autowired
-    RedisService redisService;
+    RedisServiceImpl redisServiceImpl;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -56,7 +54,16 @@ public class AuthPathFilter implements Filter {
             return;
         }
 
-        if (servletPath.equals("/zlb/FB/error") || servletPath.equals("/zlb/index") || servletPath.equals("/zlb/login") || servletPath.equals("/zlb/register")) {//不过滤 url
+        if (servletPath.startsWith("/test")
+                ) {//不过滤 url
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+
+        if (servletPath.startsWith("/zlb/FB/")
+                || servletPath.equals("/zlb/upload")
+                || servletPath.equals("/zlb/download")
+                ) {//不过滤 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
@@ -67,6 +74,7 @@ public class AuthPathFilter implements Filter {
                 || servletPath.equals("/zlb/getDealSearchInfo")
                 || servletPath.equals("/zlb/getGamesServer")
                 || servletPath.equals("/zlb/getGamesArea")
+                || servletPath.equals("/zlb/getGoodsShowInfo")
                 ) {//不过滤 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;
@@ -83,9 +91,10 @@ public class AuthPathFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-
-        if (!uid.isEmpty()) {
-            if (redisService.exist(uid)) {
+        //判断 UID
+        if (uid != null) {
+            if (redisServiceImpl.exist(uid)) {
+                System.err.println(uid);
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             } else {

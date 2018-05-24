@@ -1,26 +1,37 @@
 package com.zhzteam.zhz233.service.zlb;
 
-import com.zhzteam.zhz233.mapper.zlb.GoodsMapper;
+import com.zhzteam.zhz233.model.zlb.GoodsLeaseResult;
+import com.zhzteam.zhz233.model.zlb.GoodsRentMoreResult;
 import com.zhzteam.zhz233.model.zlb.GoodsResult;
-import com.zhzteam.zhz233.service.zlb.impl.GoodsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class GoodsService implements GoodsServiceImpl {
+public interface GoodsService {
+    /**
+     * 返回 List<GoodsResult> Limit N
+     * @param pagesize
+     * @return
+     */
+    public List<GoodsResult> selectTByKey(Integer goodstype, Integer goodsrecomm, Integer goodsstatus, Integer pagesize);
+    /**
+     * 返回租号商品 总数
+     * @param goodsstatus
+     * @return
+     */
+    public Integer selectRentTotal(Integer goodstype, Integer goodsstatus);
 
-    @Autowired
-    GoodsMapper goodsMapper;
-
-    @Override
-    public List<GoodsResult> selectTByKey(Integer goodstype, Integer goodsrecomm, Integer goodsstatus, Integer pagesize) {
-        return goodsMapper.selectTByKey(goodstype, goodsrecomm, goodsstatus, pagesize);
-    }
-
-    @Override
-    public Integer selectRentTotal(Integer goodstype,Integer goodsstatus) {
-        return goodsMapper.selectRentTotal(goodstype,goodsstatus);
-    }
+    /**
+     * selectByGoodsNo 返回 Count(id)
+     * @param goodsNo
+     * @param goodsType
+     * @param goodsStatus
+     * @return
+     */
+    public Boolean selectByGoodsNo(String goodsNo,Integer goodsType, Integer goodsStatus);
+    /**
+     * 获取 商品 信息 selectTByGoodsNo
+     * @param goodsNo
+     * @return
+     */
+    public GoodsLeaseResult selectTByGoodsNo(String goodsNo);
 }

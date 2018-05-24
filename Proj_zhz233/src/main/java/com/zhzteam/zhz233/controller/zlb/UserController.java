@@ -3,18 +3,12 @@ package com.zhzteam.zhz233.controller.zlb;
 import com.zhzteam.zhz233.common.config.*;
 import com.zhzteam.zhz233.common.utils.*;
 import com.zhzteam.zhz233.model.zlb.*;
-import com.zhzteam.zhz233.service.zlb.RedisService;
-import com.zhzteam.zhz233.service.zlb.UserService;
-import org.apache.ibatis.annotations.Param;
+import com.zhzteam.zhz233.service.zlb.impl.RedisServiceImpl;
+import com.zhzteam.zhz233.service.zlb.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,10 +17,10 @@ import java.util.Map;
 @RequestMapping(value = "/zlb")
 public class UserController {
     @Autowired
-    RedisService redisService;
+    RedisServiceImpl redisServiceImpl;
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userServiceImpl;
 
     private ResultView resultView;
     private UserResult userResult;
@@ -60,15 +54,21 @@ public class UserController {
         //获取uid
         String uid = hsRequest.getParameter("uid");
         if(uid != null){//判断uid
-            if(redisService.exist(uid)){
+            if(redisServiceImpl.exist(uid)){
                 //读取 数据
-                userResult = userService.selectTByNo(redisService.select(uid));
-                String userName = userResult.getAccount();
-                //放置User 信息
-                reMap.put("userName",userName);
-                resultView.setReMap(reMap);
-                resultView.setStatus(StatusConfig.SUCCESS);
-                resultView.setMessage("获取用户信息成功！");
+                userResult = userServiceImpl.selectTByNo(redisServiceImpl.select(uid));
+                String userName = "";
+                if(userResult != null){
+                    userName = userResult.getAccount();
+                    //放置User 信息
+                    reMap.put("userName",userName);
+                    resultView.setReMap(reMap);
+                    resultView.setStatus(StatusConfig.SUCCESS);
+                    resultView.setMessage("获取用户信息成功！");
+                }else{
+                    resultView.setStatus(StatusConfig.FAIL);
+                    resultView.setMessage("获取用户信息失败！");
+                }
             }else{
                 resultView.setStatus(StatusConfig.FAIL);
                 resultView.setMessage("获取用户信息失败！");
@@ -81,12 +81,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userBean/checkCellPhone")
-    public ResultView checkCellPhone(@Param("cellphone") String cellphone) {
+    public ResultView checkCellPhone(@RequestParam("cellphone") String cellphone) {
         //初始化对象
         resultView = new ResultView();
 
         if(cellphone != null){//验证数据 合法性
-            if(REVUtils.isLogonPhone(cellphone) && !userService.selectTByCellPhone(cellphone)){
+            if(REVUtils.isLogonPhone(cellphone) && !userServiceImpl.selectTByCellPhone(cellphone)){
                 resultView.setStatus(StatusConfig.SUCCESS);
                 resultView.setMessage("手机号未注册！");
             }else {
@@ -101,12 +101,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userBean/checkUserName")
-    public ResultView checkUserName(@Param("username") String username) {
+    public ResultView checkUserName(@RequestParam("username") String username) {
         //初始化对象
         resultView = new ResultView();
 
         if(username != null){//验证数据 合法性
-            if(REVUtils.isLogonInfo(username) && !userService.selectTByUserName(username)){
+            if(REVUtils.isLogonInfo(username) && !userServiceImpl.selectTByUserName(username)){
                 resultView.setStatus(StatusConfig.SUCCESS);
                 resultView.setMessage("用户名未注册！");
             }else {
@@ -121,12 +121,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userBean/checkCode")
-    public ResultView checkCode(@Param("cellphone") String cellphone,@Param("code") String code) {
+    public ResultView checkCode(@RequestParam("cellphone") String cellphone,@RequestParam("code") String code) {
         //初始化对象
         resultView = new ResultView();
         if(cellphone != null && code != null) {//验证数据 合法性
-            if(REVUtils.isLogonPhone(cellphone) && redisService.exist(cellphone)){
-                if(REVUtils.isLogonInfo(code) && redisService.select(cellphone).equals(code)){
+            if(REVUtils.isLogonPhone(cellphone) && redisServiceImpl.exist(cellphone)){
+                if(REVUtils.isLogonInfo(code) && redisServiceImpl.select(cellphone).equals(code)){
                     resultView.setStatus(StatusConfig.SUCCESS);
                     resultView.setMessage("验证码验证成功！");
                 }else {
@@ -145,22 +145,22 @@ public class UserController {
     }
 
     @RequestMapping(value = "/userBean/getCode")
-    public ResultView getCode(@Param("cellphone") String cellphone){
+    public ResultView getCode(@RequestParam("cellphone") String cellphone){
         //初始化对象
         resultView = new ResultView();
         codeResult = new CodeResult();
         smsResult = new SMSResult();
 
         if(cellphone != null){//验证数据 合法性
-            if(REVUtils.isLogonPhone(cellphone) && !userService.selectTByCellPhone(cellphone)){
+            if(REVUtils.isLogonPhone(cellphone) && !userServiceImpl.selectTByCellPhone(cellphone)){
                 codeResult = SMSUtils.cerateMsg(6);//获取信息组合
                 smsResult = SMSUtils.execute(cellphone, codeResult.getMsg());
                 if(smsResult != null && smsResult.getRespCode() != null){
                     if(smsResult.getRespCode().equals(SMSConfig.RESPCODE_SUCCESS)){
-                        if(redisService.exist(cellphone)){
-                            redisService.drop(cellphone);
+                        if(redisServiceImpl.exist(cellphone)){
+                            redisServiceImpl.drop(cellphone);
                         }
-                        redisService.insert(cellphone,codeResult.getCode(),RedisConfig.REDIS_TIME_30MINUTE);
+                        redisServiceImpl.insert(cellphone,codeResult.getCode(),RedisConfig.REDIS_TIME_30MINUTE);
                         resultView.setStatus(StatusConfig.SUCCESS);
                         resultView.setMessage("验证码发送成功！");
                     }else{
@@ -195,28 +195,28 @@ public class UserController {
                 if(registerInfo.getCellphone() != null && REVUtils.isLogonPhone(registerInfo.getCellphone())){
                     if(registerInfo.getPassword() != null && REVUtils.isLogonInfo(registerInfo.getPassword())){
                         if(registerInfo.getCode() != null && REVUtils.isLogonInfo(registerInfo.getCode())){
-                            if(!userService.selectTByUserName(registerInfo.getUsername())){
-                                if(!userService.selectTByCellPhone(registerInfo.getCellphone())){
-                                    if(redisService.exist(registerInfo.getCellphone())){
-                                        if(redisService.select(registerInfo.getCellphone()).equals(registerInfo.getCode())){
+                            if(!userServiceImpl.selectTByUserName(registerInfo.getUsername())){
+                                if(!userServiceImpl.selectTByCellPhone(registerInfo.getCellphone())){
+                                    if(redisServiceImpl.exist(registerInfo.getCellphone())){
+                                        if(redisServiceImpl.select(registerInfo.getCellphone()).equals(registerInfo.getCode())){
                                            //去除缓存
-                                            redisService.drop(registerInfo.getCellphone());
+                                            redisServiceImpl.drop(registerInfo.getCellphone());
                                             //获取Auto 自增编号
-                                            String autoNo = AutoIncUtils.getAccountNo(userService.selectTByAuto());
+                                            String autoNo = AutoIncUtils.getAccountNo(userServiceImpl.selectTByAuto());
                                             //注册 一条信息
-                                            Boolean registerFlag = userService.insertTByKey(
+                                            Boolean registerFlag = userServiceImpl.insertTByKey(
                                                     registerInfo.getUsername(),
                                                     registerInfo.getCellphone(),
                                                     registerInfo.getPassword(),
                                                     autoNo);
                                             if(registerFlag){//判断注册成功
-                                                userResult = userService.selectTByKey(registerInfo.getUsername(), registerInfo.getPassword());
+                                                userResult = userServiceImpl.selectTByKey(registerInfo.getUsername(), registerInfo.getPassword());
                                                 if(userResult != null) {//注册 登录用户
                                                     String uid= httpSession.getId();
-                                                    if(redisService.exist(uid)){
-                                                        redisService.drop(uid);
+                                                    if(redisServiceImpl.exist(uid)){
+                                                        redisServiceImpl.drop(uid);
                                                     }
-                                                    redisService.insert(uid, userResult.getAccount_no(),RedisConfig.REDIS_TIME_30MINUTE);
+                                                    redisServiceImpl.insert(uid, userResult.getAccount_no(),RedisConfig.REDIS_TIME_30MINUTE);
                                                     reMap.put("uid",uid);
                                                     resultView.setReMap(reMap);
                                                     resultView.setStatus(StatusConfig.SUCCESS);
@@ -274,16 +274,17 @@ public class UserController {
         //初始化对象
         resultView = new ResultView();
         userResult = new UserResult();
+        reMap = new HashMap<String, Object>();
         if(userInfo != null){
             if(userInfo.getUsername() != null && REVUtils.isLogonInfo(userInfo.getUsername())){
                 if(userInfo.getPassword() != null && REVUtils.isLogonInfo(userInfo.getPassword())){
-                    userResult = userService.selectTByKey(userInfo.getUsername(), userInfo.getPassword());
+                    userResult = userServiceImpl.selectTByKey(userInfo.getUsername(), userInfo.getPassword());
                     if(userResult != null){//判断数据库数据 验证
                         String uid = httpSession.getId();
-                        if(redisService.exist(uid)){
-                            redisService.drop(uid);
+                        if(redisServiceImpl.exist(uid)){
+                            redisServiceImpl.drop(uid);
                         }
-                        redisService.insert(uid, userResult.getAccount_no(),RedisConfig.REDIS_TIME_30MINUTE);
+                        redisServiceImpl.insert(uid, userResult.getAccount_no(),RedisConfig.REDIS_TIME_30MINUTE);
                         reMap.put("uid",uid);
                         resultView.setReMap(reMap);
                         resultView.setStatus(StatusConfig.SUCCESS);

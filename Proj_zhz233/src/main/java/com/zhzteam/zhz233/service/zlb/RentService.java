@@ -1,30 +1,60 @@
 package com.zhzteam.zhz233.service.zlb;
 
-import com.zhzteam.zhz233.mapper.zlb.RentMapper;
+import com.zhzteam.zhz233.model.zlb.GoodsRentMoreResult;
+import com.zhzteam.zhz233.model.zlb.GoodsResult;
 import com.zhzteam.zhz233.model.zlb.RentResult;
-import com.zhzteam.zhz233.service.zlb.impl.RentServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class RentService implements RentServiceImpl {
-    @Autowired
-    RentMapper rentMapper;
+public interface RentService {
+    /**
+     * 返回 商品信息 List<RentResult>
+     * @param goodstype
+     * @param goodsstatus
+     * @param pagesize
+     * @return
+     */
+    public List<RentResult> selectTByKey(Integer goodstype, Integer goodsstatus, Integer pagesize);
+    /**
+     * 返回 List<RentResult> Limit N
+     * @param gamesName
+     * @param gamesServer
+     * @param gamesArea
+     * @param searchKey
+     * @param priceRange
+     * @param authenticate
+     * @param goodsType
+     * @param goodsSort
+     * @return
+     */
+    public List<RentResult> selectTBySKey(
+            String gamesName,String gamesServer,String gamesArea,String searchKey,
+            Integer priceRange,Integer authenticate,Integer goodsType,Integer goodsSort,
+            Integer goodsStatus,Integer currentPage,Integer pageSize
+    );
+    /**
+     * 返回 Interger N
+     * @param gamesName
+     * @param gamesServer
+     * @param gamesArea
+     * @param searchKey
+     * @param priceRange
+     * @param authenticate
+     * @param goodsType
+     * @param goodsSort
+     * @param goodsStatus
+     * @return
+     */
+    public Integer selectTBySAutoCount(
+            String gamesName,String gamesServer,String gamesArea,String searchKey,
+            Integer priceRange,Integer authenticate,Integer goodsType,
+            Integer goodsSort,Integer goodsStatus
+    );
 
-    @Override
-    public List<RentResult> selectTByKey(Integer goodstype, Integer goodsstatus, Integer pagesize) {
-        return rentMapper.selectTByKey(goodstype, goodsstatus, pagesize);
-    }
-
-    @Override
-    public List<RentResult> selectTBySKey(String gamesName, String gamesServer, String gamesArea, String searchKey, Integer priceRange, Integer authenticate, Integer goodsType, Integer goodsSort, Integer goodsStatus, Integer currentPage, Integer pageSize) {
-        return rentMapper.selectTBySKey(gamesName, gamesServer, gamesArea, searchKey, priceRange, authenticate, goodsType, goodsSort, goodsStatus, currentPage, pageSize);
-    }
-
-    @Override
-    public Integer selectTBySAutoCount(String gamesName, String gamesServer, String gamesArea, String searchKey, Integer priceRange, Integer authenticate, Integer goodsType, Integer goodsSort, Integer goodsStatus) {
-        return rentMapper.selectTBySAutoCount(gamesName, gamesServer, gamesArea, searchKey, priceRange, authenticate, goodsType, goodsSort, goodsStatus);
-    }
+    /**
+     * 获取商品信息 By No
+     * @param goodsNo
+     * @return
+     */
+    public GoodsRentMoreResult selectTByGoodsNo(String goodsNo);
 }

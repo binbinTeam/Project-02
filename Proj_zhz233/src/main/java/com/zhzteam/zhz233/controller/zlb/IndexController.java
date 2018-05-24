@@ -2,9 +2,9 @@ package com.zhzteam.zhz233.controller.zlb;
 
 import com.zhzteam.zhz233.common.config.StatusConfig;
 import com.zhzteam.zhz233.model.zlb.*;
-import com.zhzteam.zhz233.service.zlb.BlacklistService;
-import com.zhzteam.zhz233.service.zlb.LeaseOrderService;
-import com.zhzteam.zhz233.service.zlb.NoticeService;
+import com.zhzteam.zhz233.service.zlb.impl.BlacklistServiceImpl;
+import com.zhzteam.zhz233.service.zlb.impl.OrderServiceImpl;
+import com.zhzteam.zhz233.service.zlb.impl.NoticeServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +18,11 @@ import java.util.Map;
 @RequestMapping(value = "/zlb")
 public class IndexController {
     @Autowired
-    NoticeService noticeService;
+    NoticeServiceImpl noticeServiceImpl;
     @Autowired
-    BlacklistService blacklistService;
+    BlacklistServiceImpl blacklistServiceImpl;
     @Autowired
-    LeaseOrderService leaseService;
+    OrderServiceImpl leaseService;
 
     private ResultView resultView;
 
@@ -41,16 +41,16 @@ public class IndexController {
         leaseOrderResultList = new ArrayList<LeaseOrderResult>();
         reMap = new HashMap<String, Object>();
         //公告活动
-        noticeResultList = noticeService.selectTByKey(1,1,5);
+        noticeResultList = noticeServiceImpl.selectTByKey(1,1,5);
         reMap.put("noticeList",noticeResultList);
         //入门须知
-        noticeResultList = noticeService.selectTByKey(2,1,5);
+        noticeResultList = noticeServiceImpl.selectTByKey(2,1,5);
         reMap.put("newbieList",noticeResultList);
         //系统更新
-        noticeResultList = noticeService.selectTByKey(3,1,5);
+        noticeResultList = noticeServiceImpl.selectTByKey(3,1,5);
         reMap.put("updateList",noticeResultList);
         //获取黑名单
-        blacklistResultList = blacklistService.selectTByKey(6);
+        blacklistResultList = blacklistServiceImpl.selectTByKey(6);
         reMap.put("blackList",blacklistResultList);
         //获取展示订单
         leaseOrderResultList = leaseService.selectTByKey(6);

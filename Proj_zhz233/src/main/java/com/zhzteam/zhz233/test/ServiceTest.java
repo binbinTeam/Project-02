@@ -1,12 +1,12 @@
 package com.zhzteam.zhz233.test;
 
-import com.zhzteam.zhz233.service.zlb.RedisService;
+import com.zhzteam.zhz233.service.zlb.impl.RedisServiceImpl;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ServiceTest {
     @Autowired
-    RedisService redisService;
+    RedisServiceImpl redisServiceImpl;
     @Test
     public void ServiceTest(){
     }
