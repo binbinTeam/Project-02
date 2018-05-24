@@ -91,10 +91,15 @@ public class AuthPathFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
+
+        if (servletPath.indexOf("/wlh") != -1
+                ) {//PC客户端不过滤URL
+            filterChain.doFilter(servletRequest, servletResponse);
+            return;
+        }
         //判断 UID
         if (uid != null) {
             if (redisServiceImpl.exist(uid)) {
-                System.err.println(uid);
                 filterChain.doFilter(servletRequest, servletResponse);
                 return;
             } else {
