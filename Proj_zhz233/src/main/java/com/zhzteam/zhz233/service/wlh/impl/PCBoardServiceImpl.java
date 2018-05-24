@@ -3,6 +3,7 @@ package com.zhzteam.zhz233.service.wlh.impl;
 import com.zhzteam.zhz233.mapper.wlh.PCBoardMapper;
 import com.zhzteam.zhz233.service.wlh.PCBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
  * @创建人 wenliheng
  * @创建时间 2018/5/23
  */
+@Service
 public class PCBoardServiceImpl implements PCBoardService {
 
     @Autowired

@@ -15,6 +15,26 @@
           tab_goods.create_time
         from tab_goods,tab_user
     </sql>
+    <sql id="selectByGoodsNo">
+        select COUNT(id)
+        from tab_goods
+    </sql>
+    <sql id="selectTByGoodsNo">
+        select tab_goods.goods_no,tab_goods.account_no,tab_goods.goods_amount,
+        tab_goods_rent.goods_night,tab_goods_rent.goods_day,tab_goods_rent.goods_week
+        from tab_goods,tab_goods_rent
+    </sql>
+    <select id="selectTByGoodsNo" resultType="com.zhzteam.zhz233.model.zlb.GoodsLeaseResult">
+        <include refid="selectTByGoodsNo"/>
+        where tab_goods.goods_no = tab_goods_rent.goods_no
+        and tab_goods.goods_no = #{goodsNo}
+    </select>
+    <select id="selectByGoodsNo" resultType="java.lang.Integer">
+        <include refid="selectByGoodsNo"/>
+        where goods_no = #{goodsNo}
+        and goods_type = #{goodsType}
+        and goods_status = #{goodsStatus};
+    </select>
     <!--selectRentTotal-->
     <select id="selectRentTotal" resultType="java.lang.Integer">
         <include refid="selectRentTotal"/>
@@ -31,4 +51,5 @@
         order by tab_goods.create_time desc
         limit #{pagesize}
     </select>
+
 </mapper>

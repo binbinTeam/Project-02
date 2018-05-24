@@ -4,8 +4,8 @@ import com.zhzteam.zhz233.common.config.StatusConfig;
 import com.zhzteam.zhz233.model.zlb.GamesResult;
 import com.zhzteam.zhz233.model.zlb.GoodsResult;
 import com.zhzteam.zhz233.model.zlb.ResultView;
-import com.zhzteam.zhz233.service.zlb.GamesService;
-import com.zhzteam.zhz233.service.zlb.GoodsService;
+import com.zhzteam.zhz233.service.zlb.impl.GamesServiceImpl;
+import com.zhzteam.zhz233.service.zlb.impl.GoodsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,9 +19,9 @@ import java.util.Map;
 @RequestMapping(value = "/zlb")
 public class TasteController {
     @Autowired
-    GoodsService goodsService;
+    GoodsServiceImpl goodsServiceImpl;
     @Autowired
-    GamesService gamesService;
+    GamesServiceImpl gamesServiceImpl;
 
     private ResultView resultView;
     private List<GoodsResult> goodsResultList;
@@ -38,19 +38,19 @@ public class TasteController {
         reMap = new HashMap<String, Object>();
 
         //放置 特价体验 游戏信息 热游
-        gamesResultList = gamesService.selectTByHotKey(8);
+        gamesResultList = gamesServiceImpl.selectTByHotKey(8);
         reMap.put("HOTgamesResultList",gamesResultList);
         //放置 特价体验 游戏信息 端游
-        gamesResultList = gamesService.selectTByKey(1,8);
+        gamesResultList = gamesServiceImpl.selectTByKey(1,8);
         reMap.put("DYgamesResultList",gamesResultList);
         //放置 特价体验 游戏信息 页游
-        gamesResultList = gamesService.selectTByKey(2,8);
+        gamesResultList = gamesServiceImpl.selectTByKey(2,8);
         reMap.put("YYgamesResultList",gamesResultList);
         //放置 特价体验 游戏信息 手游
-        gamesResultList = gamesService.selectTByKey(3,8);
+        gamesResultList = gamesServiceImpl.selectTByKey(3,8);
         reMap.put("SYgamesResultList",gamesResultList);
         //放置 特价体验 商品信息
-        goodsResultList = goodsService.selectTByKey(4,3,1,10);
+        goodsResultList = goodsServiceImpl.selectTByKey(1,3,1,10);
         reMap.put("goodsResultList",goodsResultList);
         if(!reMap.isEmpty()){
             resultView.setReMap(reMap);

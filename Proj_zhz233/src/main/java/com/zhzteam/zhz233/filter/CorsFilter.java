@@ -7,7 +7,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Order(Integer.MAX_VALUE)
+@Order(Integer.MAX_VALUE - 1)
 @WebFilter(urlPatterns = "/*",filterName = "CorsFilter")
 public class CorsFilter implements Filter {
 

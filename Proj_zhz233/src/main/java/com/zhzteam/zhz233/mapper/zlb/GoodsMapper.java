@@ -1,6 +1,9 @@
 package com.zhzteam.zhz233.mapper.zlb;
 
+import com.zhzteam.zhz233.model.zlb.GoodsLeaseResult;
+import com.zhzteam.zhz233.model.zlb.GoodsRentMoreResult;
 import com.zhzteam.zhz233.model.zlb.GoodsResult;
+import com.zhzteam.zhz233.model.zlb.LeaseOrderInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,5 +26,20 @@ public interface GoodsMapper {
      */
     public Integer selectRentTotal(@Param("goodstype")Integer goodstype, @Param("goodsstatus") Integer goodsstatus);
 
+    /**
+     * selectByGoodsNo 返回 Count(id)
+     * @param goodsNo
+     * @param goodsType
+     * @param goodsStatus
+     * @return
+     */
+    public Integer selectByGoodsNo(@Param("goodsNo") String goodsNo,@Param("goodsType")Integer goodsType, @Param("goodsStatus") Integer goodsStatus);
+
+    /**
+     * 获取 商品 信息 selectTByGoodsNo
+     * @param goodsNo
+     * @return
+     */
+    public GoodsLeaseResult selectTByGoodsNo(@Param("goodsNo") String goodsNo);
 
 }

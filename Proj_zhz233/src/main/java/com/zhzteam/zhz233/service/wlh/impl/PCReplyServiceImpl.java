@@ -4,6 +4,7 @@ import com.zhzteam.zhz233.mapper.wlh.PCReplyMapper;
 import com.zhzteam.zhz233.model.wlh.ShowReplyView;
 import com.zhzteam.zhz233.service.wlh.PCReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * @创建人 wenliheng
  * @创建时间 2018/5/23
  */
+@Service
 public class PCReplyServiceImpl implements PCReplyService {
 
     @Autowired

@@ -1,13 +1,57 @@
 package com.zhzteam.zhz233.test;
 
-import com.zhzteam.zhz233.common.utils.AutoIncUtils;
-import com.zhzteam.zhz233.common.utils.GsonUtils;
-import com.zhzteam.zhz233.common.utils.JWTUtils;
+import com.zhzteam.zhz233.common.utils.*;
 import com.zhzteam.zhz233.model.JWTModel;
 import com.zhzteam.zhz233.model.zlb.JWTResult;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 public class UtilsTest {
+    @Test
+    public void Test6(){
+        String A = AutoIncUtils.getAccountNo("");
+        System.err.println(A);
+        String a = AutoIncUtils.getLeaseOrderNo("");
+        System.err.println(a);
+    }
+    @Test
+    public void Test5(){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE,1);
+        //calendar.add(Calendar.DAY_OF_MONTH,1);
+        //calendar.add(Calendar.DAY_OF_YEAR,1);
+        System.err.println(df.format(calendar.getTime()));
+    }
+    @Test
+    public void Test4(){
+        Date t= DateTimeUtils.getDateTime(22,0,0);
+        System.err.println(t);
+        Date tt= DateTimeUtils.getDateTime(22+10,0,0);
+        System.err.println(tt);
+    }
+    @Test
+    public void Test3(){
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        Long t = System.currentTimeMillis();
+        Date tt = new Date(t);
+        Date ttt = new Date(t+ DateUtils.getLongHour(2));
+
+        System.err.println(df.format(tt));
+        System.err.println(ttt);
+        System.err.println(DateTimeUtils.getDatePATTERN_YMDHMS(df.format(tt)));
+    }
+    @Test
+    public void Test2(){
+        String fileName = "12312.jpg";
+        String prefixName = fileName.substring(fileName.lastIndexOf("."));
+        prefixName = fileName.substring(0,fileName.lastIndexOf("."));
+        System.out.println(fileName.lastIndexOf("."));
+        System.out.println(prefixName);
+    }
     @Test
     public void Test1(){
         String autoNo = AutoIncUtils.getAccountNo("");

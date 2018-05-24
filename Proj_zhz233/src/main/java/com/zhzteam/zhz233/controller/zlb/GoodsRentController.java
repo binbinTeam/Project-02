@@ -3,7 +3,7 @@ package com.zhzteam.zhz233.controller.zlb;
 import com.zhzteam.zhz233.common.config.StatusConfig;
 import com.zhzteam.zhz233.model.zlb.GoodsRentResult;
 import com.zhzteam.zhz233.model.zlb.ResultView;
-import com.zhzteam.zhz233.service.zlb.GoodsRentService;
+import com.zhzteam.zhz233.service.zlb.impl.GoodsRentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +18,7 @@ import java.util.Map;
 @RequestMapping(value = "/zlb")
 public class GoodsRentController {
     @Autowired
-    GoodsRentService goodsRentService;
+    GoodsRentServiceImpl goodsRentServiceImpl;
 
     private ResultView resultView;
 
@@ -33,7 +33,7 @@ public class GoodsRentController {
         goodsRentResultList = new ArrayList<GoodsRentResult>();
         reMap = new HashMap<String, Object>();
         //放置 数据
-        goodsRentResultList = goodsRentService.selectTByKey(0,0,0,10);
+        goodsRentResultList = goodsRentServiceImpl.selectTByKey(0,0,0,10);
         reMap.put("goodsRentResultList",goodsRentResultList);
         if(!reMap.isEmpty()){
             resultView.setReMap(reMap);

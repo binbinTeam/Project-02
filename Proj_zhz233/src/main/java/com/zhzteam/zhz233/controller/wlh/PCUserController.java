@@ -3,6 +3,7 @@ package com.zhzteam.zhz233.controller.wlh;
 import com.zhzteam.zhz233.model.wlh.UserView;
 import com.zhzteam.zhz233.service.wlh.PCUserService;
 import com.zhzteam.zhz233.service.zlb.RedisService;
+import com.zhzteam.zhz233.service.zlb.impl.RedisServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class PCUserController {
     @Autowired
     PCUserService userService;
     @Autowired
-    RedisService redisService;
+    RedisServiceImpl redisService;
 
     @ResponseBody
     @RequestMapping(value = "/Login",method = {RequestMethod.POST})

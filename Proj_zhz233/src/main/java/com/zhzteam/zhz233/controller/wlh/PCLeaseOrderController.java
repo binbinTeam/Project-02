@@ -4,6 +4,7 @@ import com.zhzteam.zhz233.model.wlh.UserRentOrderView;
 import com.zhzteam.zhz233.service.wlh.PCLeaseOrderService;
 import com.zhzteam.zhz233.service.wlh.PCUserService;
 import com.zhzteam.zhz233.service.zlb.RedisService;
+import com.zhzteam.zhz233.service.zlb.impl.RedisServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ public class PCLeaseOrderController {
     @Autowired
     PCLeaseOrderService leaseOrderService;
     @Autowired
-    RedisService redisService;
+    RedisServiceImpl redisService;
     @Autowired
     PCUserService userService;
 
