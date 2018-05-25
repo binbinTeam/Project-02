@@ -61,7 +61,7 @@ public class AuthPathFilter implements Filter {
         }
 
         if (servletPath.startsWith("/zlb/FB/")
-                || servletPath.equals("/zlb/upload")
+                /*|| servletPath.equals("/zlb/upload")*/
                 || servletPath.equals("/zlb/download")
                 ) {//不过滤 url
             filterChain.doFilter(servletRequest, servletResponse);
@@ -75,6 +75,7 @@ public class AuthPathFilter implements Filter {
                 || servletPath.equals("/zlb/getGamesServer")
                 || servletPath.equals("/zlb/getGamesArea")
                 || servletPath.equals("/zlb/getGoodsShowInfo")
+                /*|| servletPath.equals("/zlb/getHelpAutoInfo")*/
                 ) {//不过滤 url
             filterChain.doFilter(servletRequest, servletResponse);
             return;

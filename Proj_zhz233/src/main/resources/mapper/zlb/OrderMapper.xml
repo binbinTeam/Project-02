@@ -19,11 +19,7 @@
         LIMIT 1
     </sql>
     <!--insertTByKey-->
-    <sql id="insertTByKey">
-
-    </sql>
-    <!--insertTByKey-->
-    <insert id="insertTByKey">
+    <insert id="insertTByKey" parameterType="com.zhzteam.zhz233.model.zlb.LeaseOrderInfo">
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID()
         </selectKey>

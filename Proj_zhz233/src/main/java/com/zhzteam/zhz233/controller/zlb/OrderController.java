@@ -104,17 +104,15 @@ public class OrderController {
                 leaseOrderInfo.setUpdate_time(startTime);
                 leaseOrderInfo.setCreate_time(startTime);
                 //插入数据库
-                //orderServiceImpl.insertTByKey(leaseOrderInfo);
-
-                //放入 缓存 或者 数据库
-                //redisServiceImpl.set("test",leaseOrderInfo,RedisConfig.REDIS_TIME_30MINUTE);
-                //时间段
-                Long times = 1000L;
-                reMap.put("orderTime",times);
-                //设置 返回 添加成功
-                resultView.setReMap(reMap);
-                resultView.setStatus(StatusConfig.SUCCESS);
-                resultView.setMessage("添加订单成功！");
+                if(orderServiceImpl.insertTByKey(leaseOrderInfo)){
+                    //放入 缓存 或者 数据库
+                    //redisServiceImpl.set("test",leaseOrderInfo,RedisConfig.REDIS_TIME_30MINUTE);
+                    resultView.setStatus(StatusConfig.SUCCESS);
+                    resultView.setMessage("添加订单成功！");
+                }else {
+                    resultView.setStatus(StatusConfig.FAIL);
+                    resultView.setMessage("添加订单失败！");
+                }
             }else {
                 resultView.setStatus(StatusConfig.FAIL);
                 resultView.setMessage("添加订单失败！");

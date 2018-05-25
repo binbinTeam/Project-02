@@ -20,7 +20,7 @@ public class DownloadController {
     @ResponseBody
     public String download(HttpServletRequest request, HttpServletResponse response) {
         String pathName =  "G:\\Zhz233File\\";
-        String fileName = "UpperDevice2018.05.20.0001.exe";
+        String fileName = "UpperDevice2018.05.20.0001.zip";
         if(FileLoadUtils.downloadFile(request,response,pathName,fileName)) return "下载成功！";
         else return "下载失败！";
     }

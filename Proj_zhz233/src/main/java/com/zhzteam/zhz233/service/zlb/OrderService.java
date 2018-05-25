@@ -22,5 +22,5 @@ public interface OrderService {
      * @param leaseOrderInfo
      * @return
      */
-    public Long insertTByKey(LeaseOrderInfo leaseOrderInfo);
+    public Boolean insertTByKey(LeaseOrderInfo leaseOrderInfo);
 }

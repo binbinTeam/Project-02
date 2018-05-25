@@ -25,7 +25,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Long insertTByKey(LeaseOrderInfo leaseOrderInfo) {
-        return orderMapper.insertTByKey(leaseOrderInfo);
+    public Boolean insertTByKey(LeaseOrderInfo leaseOrderInfo) {
+        if(orderMapper.insertTByKey(leaseOrderInfo) > 0) return true;
+        else return false;
     }
 }

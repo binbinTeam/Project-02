@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class LeaseOrderInfo implements Serializable {
+    private Long id;
     private String order_no;
     private String goods_no;
     private String account_no;
@@ -14,6 +15,14 @@ public class LeaseOrderInfo implements Serializable {
     private Integer order_state;
     private Date update_time;
     private Date create_time;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getOrder_no() {
         return order_no;
