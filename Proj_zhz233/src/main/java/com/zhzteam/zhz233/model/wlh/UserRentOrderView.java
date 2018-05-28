@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  */
 public class UserRentOrderView {
     private String order_no;//订单编号
-    private String games_name;//游戏名
+    private String goods_game;//游戏名
     private String goods_access;//游戏账号
     private double order_amount;//订单金额
     private LocalDateTime order_end_time;//订单结束时间
@@ -22,14 +22,6 @@ public class UserRentOrderView {
 
     public void setOrder_no(String order_no) {
         this.order_no = order_no;
-    }
-
-    public String getGames_name() {
-        return games_name;
-    }
-
-    public void setGames_name(String games_name) {
-        this.games_name = games_name;
     }
 
     public String getGoods_access() {
@@ -54,5 +46,13 @@ public class UserRentOrderView {
 
     public void setOrder_end_time(LocalDateTime order_end_time) {
         this.order_end_time = order_end_time;
+    }
+
+    public String getGoods_game() {
+        return goods_game;
+    }
+
+    public void setGoods_game(String goods_game) {
+        this.goods_game = goods_game;
     }
 }

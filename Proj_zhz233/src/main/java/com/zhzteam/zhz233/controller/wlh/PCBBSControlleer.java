@@ -1,6 +1,7 @@
 package com.zhzteam.zhz233.controller.wlh;
 
 import com.zhzteam.zhz233.model.BBSModel;
+import com.zhzteam.zhz233.model.ReplyModel;
 import com.zhzteam.zhz233.model.UserModel;
 import com.zhzteam.zhz233.model.wlh.ShowBBSView;
 import com.zhzteam.zhz233.model.wlh.ShowReplyView;
@@ -65,7 +66,7 @@ public class PCBBSControlleer {
         if(bbsId == null){
             return "帖子选择出错！";
         }
-        String redisUser = (String) redisService.get(session);
+        String redisUser = (String) redisService.select(session);
         if (!redisUser.equals(userName)){
             return "请登陆正确的用户";
         }
@@ -106,7 +107,7 @@ public class PCBBSControlleer {
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(session)){
             return "请登陆后操作！";
         }
-        String redisUser = (String) redisService.get(session);
+        String redisUser = (String) redisService.select(session);
         if (!redisUser.equals(userName)){
             return "请登陆正确的用户";
         }
@@ -123,6 +124,7 @@ public class PCBBSControlleer {
         bbsModel.setBbs_title(title);
         bbsModel.setBoard_id(Integer.valueOf(boardMap.get("id").toString()));
         bbsModel.setCreatetime(LocalDateTime.now());
+        bbsModel.setUpdatetime(LocalDateTime.now());
         Integer flag = bbsService.insertOne(bbsModel);
         if (flag == null){
             return "添加失败";
@@ -137,7 +139,7 @@ public class PCBBSControlleer {
         if (StringUtils.isEmpty(userName) || StringUtils.isEmpty(session)){
             return "请登陆后操作！";
         }
-        String redisUser = (String) redisService.get(session);
+        String redisUser = (String) redisService.select(session);
         if (!redisUser.equals(userName)){
             return "请登陆正确的用户";
         }
@@ -170,8 +172,23 @@ public class PCBBSControlleer {
 
     @ResponseBody
     @RequestMapping(value = "/writeReply")
-    public Object writeReply(HttpServletResponse response,HttpServletRequest request,Integer sessionId,String userName,Integer bbsId,String count){
-        //还没实现
-        return null;
+    public Object writeReply(HttpServletResponse response,HttpServletRequest request,
+                             String sessionId,String userName,Integer bbsId,String count){
+        if (sessionId==null || StringUtils.isEmpty(userName)){
+            return "访问错误！";
+        }
+        if(!redisService.exist(sessionId.toString())){
+            return "访问错误！";
+        }
+        UserModel user = userService.selectByAccount(userName);
+        if (bbsId==null || StringUtils.isEmpty(count)){
+            return "添加失败！";
+        }
+        String userNo = user.getAccount_no();
+        Integer flag = replyService.insertReply(userNo,bbsId,count);
+        if (flag == null){
+            return "添加失败！";
+        }
+        return "添加成功！";
     }
 }

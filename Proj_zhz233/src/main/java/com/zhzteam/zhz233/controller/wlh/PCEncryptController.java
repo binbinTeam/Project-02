@@ -3,8 +3,11 @@ package com.zhzteam.zhz233.controller.wlh;
 import com.zhzteam.zhz233.common.utils.RSACoder;
 import com.zhzteam.zhz233.model.GoodsRentModel;
 import com.zhzteam.zhz233.model.LeaseOrderModel;
+import com.zhzteam.zhz233.model.wlh.ShowPcOrderView;
+import com.zhzteam.zhz233.service.wlh.PCEncryptService;
 import com.zhzteam.zhz233.service.wlh.PCGoodsRentService;
 import com.zhzteam.zhz233.service.wlh.PCLeaseOrderService;
+import com.zhzteam.zhz233.service.zlb.impl.RedisServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +32,23 @@ public class PCEncryptController {
     PCLeaseOrderService leaseOrderService;
     @Autowired
     PCGoodsRentService goodsRentService;
+    @Autowired
+    RedisServiceImpl redisService;
+    @Autowired
+    PCEncryptService encryptService;
 
     @ResponseBody
     @RequestMapping(value = "/Encrypt")
-    public Object Encrypt(HttpServletRequest request, HttpServletResponse response, String orderNo, String access, String publicKey){
-        if(StringUtils.isEmpty(orderNo)){
+    public Object Encrypt(HttpServletRequest request, HttpServletResponse response,
+                          String orderNo, String access, String publicKey,String userName,String session){
+        if(StringUtils.isEmpty(orderNo) || StringUtils.isEmpty(userName) || StringUtils.isEmpty(session)){
             return null;
+        }
+        if (redisService.exist(session)){//用户验证
+            String redisUser = redisService.select(session);
+            if (!redisUser.equals(userName)){
+                return null;
+            }
         }
         LeaseOrderModel leaseOrderPojo = leaseOrderService.findOne(orderNo);
         if(leaseOrderPojo == null){
@@ -58,5 +72,22 @@ public class PCEncryptController {
             e.printStackTrace();
         }
         return b;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getOrderInfo")
+    public Object getOrderInfo(HttpServletResponse response,HttpServletRequest request,
+                               String orderNo,String userName,String session){
+        if (redisService.exist(session)){//用户验证
+            String redisUser = redisService.select(session);
+            if (!redisUser.equals(userName)){
+                return null;
+            }
+        }
+        if (StringUtils.isEmpty(orderNo)){
+            return null;
+        }
+        ShowPcOrderView orderView = encryptService.findOrderInfo(orderNo);
+        return  orderView;
     }
 }

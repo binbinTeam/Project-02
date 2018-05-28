@@ -39,7 +39,7 @@ public class PCUserController {
         if(userView == null){
             return "找不到用户或密码错误";
         }
-        redisService.set(request.getSession().getId(),userView.getAccount());
+        redisService.insert(request.getSession().getId(),userView.getAccount(),1800L);
         System.out.println(request.getSession().getId());
         return request.getSession().getId();
     }

@@ -1,10 +1,8 @@
 package com.zhzteam.zhz233.mapper.wlh;
 
+import com.zhzteam.zhz233.model.ReplyModel;
 import com.zhzteam.zhz233.model.wlh.ShowReplyView;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -28,4 +26,9 @@ public interface PCReplyMapper {
             "left join tab_user tu on tr.account_no = tu.account_no\n" +
             "where tr.bbs_id = #{bbs_id} ORDER BY tr.create_time desc")
     List<ShowReplyView> ShowReply(@Param("bbs_id")Integer bbs_id);
+
+    @Insert("INSERT into tab_reply(reply_count,account_no,bbs_id,create_time) " +
+            "VALUES (#{reply_count},#{account_no},#{bbs_id},#{create_time})")
+    @Options(useGeneratedKeys = true,keyProperty = "id")
+    Integer insertReply(ReplyModel replyModel);
 }

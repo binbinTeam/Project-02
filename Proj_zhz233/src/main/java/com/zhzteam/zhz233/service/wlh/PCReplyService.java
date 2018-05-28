@@ -1,5 +1,6 @@
 package com.zhzteam.zhz233.service.wlh;
 
+import com.zhzteam.zhz233.model.ReplyModel;
 import com.zhzteam.zhz233.model.wlh.ShowReplyView;
 
 import java.util.List;
@@ -17,4 +18,6 @@ public interface PCReplyService {
     Integer CountByBBSId(Integer bbsId);
 
     List<ShowReplyView> ShowReply(Integer bbsId);
+
+    Integer insertReply(String userNo,Integer bbsId,String count);
 }

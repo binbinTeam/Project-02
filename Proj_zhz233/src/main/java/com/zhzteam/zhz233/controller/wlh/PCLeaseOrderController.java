@@ -36,12 +36,12 @@ public class PCLeaseOrderController {
 
     @ResponseBody
     @RequestMapping(value = "/showBuyerOrder")
-    public Object showBuyerOrder(HttpServletResponse response, HttpServletRequest request, String session_id, String user_name) throws IOException {
-        if(StringUtils.isEmpty(session_id)){
+    public Object showBuyerOrder(HttpServletResponse response, HttpServletRequest request, String sessionId, String user_name) throws IOException {
+        if(StringUtils.isEmpty(sessionId)){
             return "无效用户信息";
         }
-        String username = (String) redisService.get(session_id);
-        if (!username.equals(user_name)){
+        String username = (String) redisService.select(sessionId);
+        if (StringUtils.isEmpty(username) || !username.equals(user_name)){
             return "无效用户信息";
         }
         String userNo = userService.selectByAccount(username).getAccount_no();

@@ -17,11 +17,10 @@ import java.util.List;
  */
 @Mapper
 public interface PCLeaseOrderMapper {
-    @Select("select tlo.order_no,tg.games_name,tgr.goods_access,tlo.order_amount,tlo.order_end_time \n"+
+    @Select("select tlo.order_no,tgr.goods_game,tgr.goods_access,tlo.order_amount,tlo.order_end_time \n"+
             "from tab_lease_order tlo\n" +
             "left join tab_goods_rent tgr on tlo.goods_no = tgr.goods_no\n" +
-            "LEFT join tab_games tg on tgr.goods_game_no = tg.games_no\n" +
-            "where tlo.buyer_no = #{buyerNo} and tlo.order_state = 2")
+            "where tlo.buyer_no = #{buyerNo} and tlo.order_state = 4")
     List<UserRentOrderView> selectByBuyer(@Param("buyerNo") String buyerNo);
 
     @Select("select * from tab_lease_order where order_no = #{orderNo}")

@@ -1,6 +1,7 @@
 package com.zhzteam.zhz233.mapper.wlh;
 
 import com.zhzteam.zhz233.model.BBSModel;
+import com.zhzteam.zhz233.model.ReplyModel;
 import com.zhzteam.zhz233.model.wlh.ShowBBSView;
 import org.apache.ibatis.annotations.*;
 
@@ -38,10 +39,14 @@ public interface PCBBSMapper {
 
     @Insert("<script>insert into tab_bbs ("+
             "<if test='bbs_id!=null'>bbs_id,</if>"+
-            "account_no,bbs_title,bbs_count,board_id,createtime) "+
+            "account_no,bbs_title,bbs_count,board_id,createtime" +
+            ",updatetime" +
+            ") "+
             "VALUES ("+
             "<if test='bbs_id!=null'>#{bbs_id},</if>"+
-            "#{account_no},#{bbs_title},#{bbs_count},#{board_id},#{createtime})</script>")
+            "#{account_no},#{bbs_title},#{bbs_count},#{board_id},#{createtime}" +
+            ",#{updatetime}" +
+            ")</script>")
     @Options(useGeneratedKeys = true,keyProperty = "bbs_id")
     Integer insertOne(BBSModel bbsPojo);
 }
