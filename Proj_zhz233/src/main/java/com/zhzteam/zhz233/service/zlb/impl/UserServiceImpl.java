@@ -43,4 +43,25 @@ public class UserServiceImpl implements UserService {
     public UserResult selectTByNo(String no) {
         return userMapper.selectTByNo(no);
     }
+
+    @Override
+    public String selectCellPhoneByANO(String accountNo) {
+        return userMapper.selectCellPhoneByANO(accountNo);
+    }
+
+    @Override
+    public void updatePwdByPwdANo(String password, String accountNo) {
+        userMapper.updatePwdByPwdANo(password, accountNo);
+    }
+
+    @Override
+    public void updateCPByCPANo(String cellphone, String accountNo) {
+        userMapper.updateCPByCPANo(cellphone, accountNo);
+    }
+
+    @Override
+    public Boolean selectCertificationByANO(String accountNo) {
+        if(userMapper.selectCertificationByANO(accountNo) > 0) return true;
+        else return false;
+    }
 }

@@ -51,4 +51,33 @@ public interface UserMapper {
      * @return
      */
     public UserResult selectTByNo(@Param("no") String no);
+
+    /**
+     * 获取用户 手机号
+     * @param accountNo
+     * @return
+     */
+    public String selectCellPhoneByANO(@Param("accountNo") String accountNo);
+
+    /**
+     * 获取用户 认证状态
+     * @param accountNo
+     * @return
+     */
+    public Integer selectCertificationByANO(@Param("accountNo") String accountNo);
+
+    /**
+     * 更新 密码
+     * @param password
+     * @param accountNo
+     * @return
+     */
+    public void updatePwdByPwdANo(@Param("password") String password,@Param("accountNo") String accountNo);
+
+    /**
+     * 更新 手机号
+     * @param cellphone
+     * @param accountNo
+     */
+    public void updateCPByCPANo(@Param("cellphone") String cellphone,@Param("accountNo") String accountNo);
 }

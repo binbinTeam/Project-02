@@ -29,45 +29,27 @@ public class UserController {
 
     private Map<String,Object> reMap;
 
-    @RequestMapping(value = "/userBean/getUserLeaseOrderInfo")
-    public ResultView getUserLeaseOrderInfo(HttpServletRequest hsRequest){
-        //初始化 容器
-        resultView = new ResultView();
-        reMap = new HashMap<String, Object>();
-
-        if(1==1){
-            resultView.setStatus(StatusConfig.SUCCESS);
-            resultView.setMessage("获取用户订单信息成功！");
-        }else{
-            resultView.setStatus(StatusConfig.FAIL);
-            resultView.setMessage("获取用户订单信息失败！");
-        }
-        return resultView;
-    }
-
     @RequestMapping(value = "/userBean/getUserInfo")
-    public ResultView register(HttpServletRequest hsRequest){
+    public ResultView register(HttpServletRequest hsRequest,@RequestParam("uid") String uid){
         //初始化 容器
         resultView = new ResultView();
         userResult = new UserResult();
         reMap = new HashMap<String, Object>();
-        //获取uid
-        String uid = hsRequest.getParameter("uid");
-        if(uid != null){//判断uid
-            if(redisServiceImpl.exist(uid)){
-                //读取 数据
-                userResult = userServiceImpl.selectTByNo(redisServiceImpl.select(uid));
-                String userName = "";
-                if(userResult != null){
-                    userName = userResult.getAccount();
-                    //放置User 信息
-                    reMap.put("userName",userName);
+        if(redisServiceImpl.exist(uid)){
+            //读取 数据
+            userResult = userServiceImpl.selectTByNo(redisServiceImpl.select(uid));
+            String userName = "";
+            if(userResult != null){
+                userName = userResult.getAccount();
+                //放置User 信息
+                reMap.put("userName",userName);
+                if(!reMap.isEmpty()){
                     resultView.setReMap(reMap);
                     resultView.setStatus(StatusConfig.SUCCESS);
                     resultView.setMessage("获取用户信息成功！");
-                }else{
+                }else {
                     resultView.setStatus(StatusConfig.FAIL);
-                    resultView.setMessage("获取用户信息失败！");
+                    resultView.setMessage("获取用户信息为空！");
                 }
             }else{
                 resultView.setStatus(StatusConfig.FAIL);
@@ -75,7 +57,7 @@ public class UserController {
             }
         }else{
             resultView.setStatus(StatusConfig.FAIL);
-            resultView.setMessage("用户未登录，请登录后重试！");
+            resultView.setMessage("获取用户信息失败！");
         }
         return resultView;
     }
@@ -209,6 +191,7 @@ public class UserController {
                                                     registerInfo.getCellphone(),
                                                     registerInfo.getPassword(),
                                                     autoNo);
+
                                             if(registerFlag){//判断注册成功
                                                 userResult = userServiceImpl.selectTByKey(registerInfo.getUsername(), registerInfo.getPassword());
                                                 if(userResult != null) {//注册 登录用户
@@ -218,9 +201,14 @@ public class UserController {
                                                     }
                                                     redisServiceImpl.insert(uid, userResult.getAccount_no(),RedisConfig.REDIS_TIME_30MINUTE);
                                                     reMap.put("uid",uid);
-                                                    resultView.setReMap(reMap);
-                                                    resultView.setStatus(StatusConfig.SUCCESS);
-                                                    resultView.setMessage("注册登录成功！");
+                                                    if(!reMap.isEmpty()){
+                                                        resultView.setReMap(reMap);
+                                                        resultView.setStatus(StatusConfig.SUCCESS);
+                                                        resultView.setMessage("注册登录成功！");
+                                                    }else {
+                                                        resultView.setStatus(StatusConfig.SUCCESS);
+                                                        resultView.setMessage("系统错误！");
+                                                    }
                                                 }else{
                                                     resultView.setStatus(StatusConfig.SUCCESS);
                                                     resultView.setMessage("注册成功！");
@@ -286,9 +274,14 @@ public class UserController {
                         }
                         redisServiceImpl.insert(uid, userResult.getAccount_no(),RedisConfig.REDIS_TIME_30MINUTE);
                         reMap.put("uid",uid);
-                        resultView.setReMap(reMap);
-                        resultView.setStatus(StatusConfig.SUCCESS);
-                        resultView.setMessage("登录成功！");
+                        if(!reMap.isEmpty()){
+                            resultView.setReMap(reMap);
+                            resultView.setStatus(StatusConfig.SUCCESS);
+                            resultView.setMessage("登录成功！");
+                        }else {
+                            resultView.setStatus(StatusConfig.FAIL);
+                            resultView.setMessage("系统错误！");
+                        }
                     }else{
                         resultView.setStatus(StatusConfig.FAIL);
                         resultView.setMessage("登录失败！");

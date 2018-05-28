@@ -4,12 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 
-public class FileLoadUtils {
-
-    public static Boolean uploadFile(){
-
-        return false;
-    }
+public class DownloadUtils {
 
     /**
      * downloadFile文件下载
