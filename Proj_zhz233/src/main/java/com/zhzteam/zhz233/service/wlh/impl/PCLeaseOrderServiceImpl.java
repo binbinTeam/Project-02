@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @描述
@@ -23,11 +25,11 @@ public class PCLeaseOrderServiceImpl implements PCLeaseOrderService {
     PCLeaseOrderMapper pcLeaseOrderMapper;
 
     @Override
-    public List<UserRentOrderView> showBuyerOrder(String buyerNo) {
-        if (StringUtils.isEmpty(buyerNo)){
+    public List<UserRentOrderView> showBuyerOrder(String buyerNo,Integer state) {
+        if (StringUtils.isEmpty(buyerNo) || state==null){
             return null;
         }
-        List<UserRentOrderView> list = pcLeaseOrderMapper.selectByBuyer(buyerNo);
+        List<UserRentOrderView> list = pcLeaseOrderMapper.selectByBuyer(buyerNo,state);
         return list;
     }
 
