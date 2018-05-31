@@ -125,7 +125,7 @@ public class DecimalUtils {
         }
         BigDecimal b1 = new BigDecimal(Double.valueOf(v1));
         BigDecimal b2 = new BigDecimal(Double.valueOf(v2));
-        return b1.subtract(b2).setScale(scale, BigDecimal.ROUND_HALF_UP).toString();
+        return b1.multiply(b2).setScale(scale, BigDecimal.ROUND_HALF_UP).toString();
     }
     /**
      *
@@ -143,7 +143,7 @@ public class DecimalUtils {
         }
         BigDecimal b1 = new BigDecimal(Double.valueOf(v1));
         BigDecimal b2 = new BigDecimal(Double.valueOf(v2));
-        return b1.subtract(b2).setScale(scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+        return b1.multiply(b2).setScale(scale, BigDecimal.ROUND_HALF_UP).doubleValue();
     }
     /**
      *

@@ -39,6 +39,15 @@ public class DateTimeUtils {
     private static final String PATTERN_Y = "yyyy";
 
     /**
+     * 获取 13 位毫秒数
+     * @return
+     */
+    public static Long getCurrentTimeMillis(){
+        return System.currentTimeMillis();
+    }
+
+
+    /**
      * 设置时间 ymd dms
      * @param minute
      * @param second

@@ -84,14 +84,7 @@ public class OrderController {
                 String oldNo = orderServiceImpl.selectTByAuto();
                 //获取 订单 No
                 String orderNo = AutoIncUtils.getLeaseOrderNo(oldNo);
-                //获取 订单信息
-                /*System.err.println(startTime +"//"
-                        + endTime +"//"
-                        + orderNo +"//"
-                        + goodsLeaseResult.getGoods_no() +"//"
-                        + goodsLeaseResult.getAccount_no() +"//"
-                        + buyerNo +"//"
-                        + amount);*/
+
                 //设置 订单 信息
                 leaseOrderInfo.setOrder_no(orderNo);
                 leaseOrderInfo.setGoods_no(goodsLeaseResult.getGoods_no());

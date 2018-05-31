@@ -15,7 +15,7 @@
     <sql id="selectAutoNo">
         SELECT order_no
         FROM tab_lease_order
-        ORDER BY create_time DESC
+        ORDER BY create_time DESC,id desc
         LIMIT 1
     </sql>
     <!--insertTByKey-->

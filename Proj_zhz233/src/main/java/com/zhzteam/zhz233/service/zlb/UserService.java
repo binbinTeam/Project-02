@@ -44,4 +44,29 @@ public interface UserService {
      * @return
      */
     public UserResult selectTByNo(String no);
+    /**
+     * 获取用户 手机号
+     * @param accountNo
+     * @return
+     */
+    public String selectCellPhoneByANO(String accountNo);
+    /**
+     * 更新 密码
+     * @param password
+     * @param accountNo
+     * @return
+     */
+    public void updatePwdByPwdANo(String password, String accountNo);
+    /**
+     * 更新 手机号
+     * @param cellphone
+     * @param accountNo
+     */
+    public void updateCPByCPANo(String cellphone, String accountNo);
+    /**
+     * 获取用户 认证状态
+     * @param accountNo
+     * @return
+     */
+    public Boolean selectCertificationByANO(String accountNo);
 }

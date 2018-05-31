@@ -4,6 +4,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class REVUtils {
+
+    /**
+     * 验证验证输入汉字
+     *
+     * @param str
+     * @return 如果是符合格式的字符串,返回 <b>true </b>,否则为 <b>false </b>
+     */
+    public static boolean isChinese(String str) {
+        /*String regex = "^[\u4e00-\u9fa5],{0,}$";*/
+        String regex = "^([\\u4e00-\\u9fa5]){2,7}$";
+        return match(regex, str);
+    }
+
     /**
      * 11位 手机号
      * @param str

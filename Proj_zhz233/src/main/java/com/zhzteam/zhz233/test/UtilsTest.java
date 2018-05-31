@@ -11,6 +11,22 @@ import java.util.Date;
 
 public class UtilsTest {
     @Test
+    public void Test9(){
+        //System.err.println(AutoIncUtils.getFileURLNo(""));
+        System.err.println(REVUtils.isChinese("张三李四我aiab"));
+    }
+    @Test
+    public void Test8(){
+        System.err.println(DateTimeUtils.getPatternYMDHMS());
+        System.err.println(DateTimeUtils.getCurrentTimeMillis());
+        System.err.println(DateTimeUtils.getCurrentTimeMillis());
+    }
+
+    @Test
+    public void Test7(){
+        System.err.println(AutoIncUtils.getInvlaOrderNo("2018052500000000000001"));
+    }
+    @Test
     public void Test6(){
         String A = AutoIncUtils.getAccountNo("");
         System.err.println(A);
