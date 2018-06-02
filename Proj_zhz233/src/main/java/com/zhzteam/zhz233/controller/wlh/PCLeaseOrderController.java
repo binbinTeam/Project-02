@@ -36,7 +36,8 @@ public class PCLeaseOrderController {
 
     @ResponseBody
     @RequestMapping(value = "/showBuyerOrder")
-    public Object showBuyerOrder(HttpServletResponse response, HttpServletRequest request, String sessionId, String user_name) throws IOException {
+    public Object showBuyerOrder(HttpServletResponse response, HttpServletRequest request,
+                                 String sessionId, String user_name,Integer state) throws IOException {
         if(StringUtils.isEmpty(sessionId)){
             return "无效用户信息";
         }
@@ -46,7 +47,7 @@ public class PCLeaseOrderController {
         }
         String userNo = userService.selectByAccount(username).getAccount_no();
         //String userNoTest = "201800000002";//Test
-        List<UserRentOrderView> list = leaseOrderService.showBuyerOrder(userNo);
+        List<UserRentOrderView> list = leaseOrderService.showBuyerOrder(userNo,state);
         return list;
     }
 }

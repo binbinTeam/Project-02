@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface PCLeaseOrderService {
 
-    public List<UserRentOrderView> showBuyerOrder(String buyerNo);
+    public List<UserRentOrderView> showBuyerOrder(String buyerNo,Integer state);
 
     public LeaseOrderModel findOne(String orderNo);
 }
