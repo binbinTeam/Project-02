@@ -39,13 +39,30 @@ public class DateTimeUtils {
     private static final String PATTERN_Y = "yyyy";
 
     /**
+     * 比较时间
+     * @param date
+     * @return
+     */
+    public static Boolean After(Date date){
+        return new Date().after(date);
+    }
+
+    /**
+     * 比较时间
+     * @param date
+     * @return
+     */
+    public static Boolean Before(Date date){
+        return new Date().before(date);
+    }
+
+    /**
      * 获取 13 位毫秒数
      * @return
      */
     public static Long getCurrentTimeMillis(){
         return System.currentTimeMillis();
     }
-
 
     /**
      * 设置时间 ymd dms

@@ -34,6 +34,22 @@ public class AutoIncUtils{
     }
 
     /**
+     * 20180520 00 0000 0000 0001 提现 记录 详情
+     * @param oldNo
+     * @return
+     */
+    public static String getWithdrawOrderNo(String oldNo){
+        Long autoNo = 1L;
+        String autoDT = DateTimeUtils.getPatternYMD();
+        if(oldNo != null && !oldNo.isEmpty() && !oldNo.equals("")) {
+            if(autoDT.equals(oldNo.substring(0, 8))) {
+                autoNo = Long.parseLong(oldNo.substring(11, 22)) + 1;
+            }
+        }
+        return autoDT + "02" +String.format("%012d", autoNo);
+    }
+
+    /**
      * 20180520 00 0000 0000 0001 充值 记录 详情
      * @param oldNo
      * @return
@@ -78,6 +94,21 @@ public class AutoIncUtils{
             }
         }
         return autoDT + "03" +String.format("%012d", autoNo);
+    }
+    /**
+     * 20180404 0000 0000 0001 商品编号
+     * @param oldNo
+     * @return
+     */
+    public static String getGoodsNo(String oldNo){
+        Long autoNo = 1L;
+        String autoDT = DateTimeUtils.getPatternYMD();
+        if(oldNo != null && !oldNo.isEmpty() && !oldNo.equals("")) {
+            if(autoDT.equals(oldNo.substring(0, 8))) {
+                autoNo = Long.parseLong(oldNo.substring(9, 20)) + 1;
+            }
+        }
+        return autoDT + String.format("%012d", autoNo);
     }
     /**
      * 生成自增No

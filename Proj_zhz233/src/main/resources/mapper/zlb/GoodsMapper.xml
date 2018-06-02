@@ -24,6 +24,62 @@
         tab_goods_rent.goods_night,tab_goods_rent.goods_day,tab_goods_rent.goods_week
         from tab_goods,tab_goods_rent
     </sql>
+    <!--selectNo-->
+    <sql id="selectAutoNo">
+        SELECT goods_no
+        FROM tab_goods
+        ORDER BY create_time DESC,id desc
+        LIMIT 1
+    </sql>
+    <!--selectListTByANOType-->
+    <sql id="selectListTByANOType">
+        select goods_no,goods_game,goods_theme,goods_amount,goods_status,create_time
+        from tab_goods
+    </sql>
+    <!--updateTByGNo-->
+    <sql id="updateTByGNo">
+        update tab_goods
+    </sql>
+    <!--deleteTByGNO-->
+    <delete id="deleteTByGNO">
+        delete from tab_goods
+        where tab_goods.goods_no = #{goodsNo}
+    </delete>
+    <!--selectGState-->
+    <select id="selectGState" resultType="java.lang.Integer">
+        select goods_status
+        from tab_goods
+        where tab_goods.goods_no = #{goodsNo}
+    </select>
+    <!--updateTByGNo-->
+    <select id="updateTByGNo">
+        <include refid="updateTByGNo"/>
+        set goods_status = #{goodsStatus}
+        where goods_no = #{goodsNo}
+    </select>
+    <!--selectListTByANOType-->
+    <select id="selectListTByANOType" resultType="com.zhzteam.zhz233.model.zlb.GoodsLeaseShow">
+        <include refid="selectListTByANOType"/>
+        where goods_type = #{goodsType}
+        and account_no = #{accountNo}
+    </select>
+    <!-- 增加一条用户数据 -->
+    <insert id="insertTByKey" parameterType="com.zhzteam.zhz233.model.GoodsModel">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert
+        into Tab_Goods(goods_no,account_no,
+        goods_type,goods_game,goods_theme,goods_content,goods_amount,
+        goods_recomm,goods_status,update_time,create_time)
+        values(#{goods_no},#{account_no},
+        #{goods_type},#{goods_game},#{goods_theme},#{goods_content},#{goods_amount},
+        #{goods_recomm},#{goods_status},NOW(),NOW())
+    </insert>
+    <!--selectTByAuto-->
+    <select id="selectTByAuto" resultType="java.lang.String">
+        <include refid="selectAutoNo"/>
+    </select>
     <select id="selectTByGoodsNo" resultType="com.zhzteam.zhz233.model.zlb.GoodsLeaseResult">
         <include refid="selectTByGoodsNo"/>
         where tab_goods.goods_no = tab_goods_rent.goods_no

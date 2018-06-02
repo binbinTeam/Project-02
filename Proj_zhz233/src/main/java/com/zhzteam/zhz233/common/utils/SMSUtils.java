@@ -34,6 +34,33 @@ import java.util.Random;
 public class SMSUtils {
 	//配置url
 	private static final String operation = "/industrySMS/sendSMS";
+	private static String MSG = "【租号站租借平台】";
+
+	/**
+	 * 获取订单消息
+	 * @param orderNo
+	 * @return
+	 */
+	public static String createOrderMsg(String orderNo){
+		String msg = "【租号站租借平台】尊敬的用户，" +
+				"您的订单"+orderNo+"已经处理完成，商品已经生效，" +
+				"请您注意订单生效时间，祝您使用愉快。";
+		return msg;
+	}
+
+	/**
+	 * 验证码信息
+	 * @param codeStr
+	 * @return
+	 */
+	public static String createCodeMsg(String codeStr){
+		String msg ="【租号站233】尊敬的用户，"
+				+ "您的验证码为+"+codeStr+"+，"
+				+ "请于2分钟内正确输入，"
+				+ "如非本人操作，"
+				+ "请忽略此短信。";
+		return msg;
+	}
 	/**
 	 * 
 	* @Title: cerateMsg
@@ -59,8 +86,8 @@ public class SMSUtils {
 		}
 		code = buffer.toString();
 		String msg ="【租号站233】尊敬的用户，"
-				+ "您的验证码为{+"+code+"+}，"
-				+ "请于{30}分钟内正确输入，"
+				+ "您的验证码为+"+code+"+，"
+				+ "请于2分钟内正确输入，"
 				+ "如非本人操作，"
 				+ "请忽略此短信。";
 		CodeResult codeResult = new CodeResult();

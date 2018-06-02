@@ -12,8 +12,40 @@
     <sql id="updateT">
         update tab_account
     </sql>
-    <!--updateAvailableByPwdANo-->
-    <update id="updateAvailableByPwdANo">
+    <!--insertTByKey-->
+    <insert id="insertTByKey">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into tab_account(account_no)
+        values (#{accountNo})
+    </insert>
+    <!--updateLByMoneyANo-->
+    <update id="updateLByMoneyANo">
+        <include refid="updateT"/>
+        set available = available + #{available},frozen = frozen - #{frozen}
+        where account_no = #{accountNo}
+    </update>
+    <!--updateRByMoneyANo-->
+    <update id="updateRByMoneyANo">
+        <include refid="updateT"/>
+        set available = available - #{available},frozen = frozen + #{frozen}
+        where account_no = #{accountNo}
+    </update>
+    <!--updateAvailableByANo-->
+    <update id="updateAvailableByANo">
+        <include refid="updateT"/>
+        set available = available - #{available}
+        where account_no = #{accountNo}
+    </update>
+    <!--updateWithdrawAvailableByANo-->
+    <update id="updateWithdrawAvailableByANo">
+        <include refid="updateT"/>
+        set available = available - #{money}
+        where account_no = #{accountNo}
+    </update>
+    <!--updateRechargeAvailableByANo-->
+    <update id="updateRechargeAvailableByANo">
         <include refid="updateT"/>
         set available = available + #{money}
         where account_no = #{accountNo}

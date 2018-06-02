@@ -1,9 +1,7 @@
 package com.zhzteam.zhz233.mapper.zlb;
 
-import com.zhzteam.zhz233.model.zlb.GoodsLeaseResult;
-import com.zhzteam.zhz233.model.zlb.GoodsRentMoreResult;
-import com.zhzteam.zhz233.model.zlb.GoodsResult;
-import com.zhzteam.zhz233.model.zlb.LeaseOrderInfo;
+import com.zhzteam.zhz233.model.GoodsModel;
+import com.zhzteam.zhz233.model.zlb.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -42,4 +40,44 @@ public interface GoodsMapper {
      */
     public GoodsLeaseResult selectTByGoodsNo(@Param("goodsNo") String goodsNo);
 
+    /**
+     * 获取自增 NO
+     * @return
+     */
+    public String selectTByAuto();
+
+    /**
+     * 添加 商品
+     * @param goodsModel
+     * @return
+     */
+    public Long insertTByKey(GoodsModel goodsModel);
+
+    /**
+     * 查询 个人 发布商品信息goods_theme
+     * @param goodsType
+     * @param accountNo
+     * @return
+     */
+    public List<GoodsLeaseShow> selectListTByANOType(@Param("goodsType") Integer goodsType, @Param("accountNo") String accountNo);
+
+    /**
+     * 更新商品状态
+     * @param goodsStatus
+     * @param goodsNo
+     */
+    public void updateTByGNo(@Param("goodsStatus") Integer goodsStatus, @Param("goodsNo") String goodsNo);
+
+    /**
+     * 获取状态
+     * @param goodsNo
+     * @return
+     */
+    public Integer selectGState(@Param("goodsNo") String goodsNo);
+
+    /**
+     * 删除记录
+     * @param goodsNo
+     */
+    public void deleteTByGNO(@Param("goodsNo") String goodsNo);
 }

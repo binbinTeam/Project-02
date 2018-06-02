@@ -2,6 +2,9 @@ package com.zhzteam.zhz233.controller.zlb;
 
 import com.zhzteam.zhz233.common.config.StatusConfig;
 import com.zhzteam.zhz233.model.zlb.*;
+import com.zhzteam.zhz233.service.zlb.GamesService;
+import com.zhzteam.zhz233.service.zlb.GoodsService;
+import com.zhzteam.zhz233.service.zlb.RentService;
 import com.zhzteam.zhz233.service.zlb.impl.GamesServiceImpl;
 import com.zhzteam.zhz233.service.zlb.impl.GoodsServiceImpl;
 import com.zhzteam.zhz233.service.zlb.impl.RentServiceImpl;
@@ -21,11 +24,11 @@ import java.util.Map;
 @RequestMapping(value = "/zlb")
 public class DealController {
     @Autowired
-    GamesServiceImpl gamesServiceImpl;
+    GamesService gamesService;
     @Autowired
-    RentServiceImpl rentServiceImpl;
+    RentService rentService;
     @Autowired
-    GoodsServiceImpl goodsServiceImpl;
+    GoodsService goodsService;
 
     private ResultView resultView;
     private GoodsPageResult goodsPageResult;
@@ -43,7 +46,7 @@ public class DealController {
         goodsRentMoreResult = new GoodsRentMoreResult();
         reMap = new HashMap<String, Object>();
         if(GoodsNo != null){
-            goodsRentMoreResult = rentServiceImpl.selectTByGoodsNo(GoodsNo);
+            goodsRentMoreResult = rentService.selectTByGoodsNo(GoodsNo);
             if(goodsRentMoreResult != null){
                 reMap.put("goodsDetailInfo",goodsRentMoreResult);
                 resultView.setReMap(reMap);
@@ -66,7 +69,7 @@ public class DealController {
         stringList = new ArrayList<String>();
         reMap = new HashMap<String, Object>();
         if(gamesName != null){
-            stringList = gamesServiceImpl.selectTByListArea(gamesName,serverName);
+            stringList = gamesService.selectTByListArea(gamesName,serverName);
             reMap.put("areaStringList",stringList);
         }
         //放置 交易页面
@@ -87,7 +90,7 @@ public class DealController {
         stringList = new ArrayList<String>();
         reMap = new HashMap<String, Object>();
         if(gamesName != null){
-            stringList = gamesServiceImpl.selectTByListServer(gamesName);
+            stringList = gamesService.selectTByListServer(gamesName);
             reMap.put("serverStringList",stringList);
         }
         //放置 交易页面
@@ -113,10 +116,10 @@ public class DealController {
         reMap = new HashMap<String, Object>();
 
         //放置 交易页面 游戏信息 热游
-        gamesResultList = gamesServiceImpl.selectTByHotKey(16);
+        gamesResultList = gamesService.selectTByHotKey(16);
         reMap.put("HOTgamesResultList",gamesResultList);
         //search_game
-        stringList = gamesServiceImpl.selectTByListName(8);
+        stringList = gamesService.selectTByListName(8);
         reMap.put("gamesStringList",stringList);
         //search_server
 
@@ -124,10 +127,10 @@ public class DealController {
 
         //放置 交易页面 出租 商品信息
         //获取所有出租商品信息总数
-        Integer totalCount = goodsServiceImpl.selectRentTotal(1,1);
+        Integer totalCount = goodsService.selectRentTotal(1,1);
         Integer totalPage = (totalCount % 16 == 0) ? (totalCount / 16) : (totalCount / 16 + 1);
         //默认出租商品信息展示
-        rentResultList = rentServiceImpl.selectTByKey(1,1,16);
+        rentResultList = rentService.selectTByKey(1,1,16);
         goodsPageResult.setTotalCount(totalCount);
         goodsPageResult.setTotalPage(totalPage);
         goodsPageResult.setCurrentPage(1);
@@ -156,7 +159,7 @@ public class DealController {
         gamesResultList = new ArrayList<GamesResult>();
         reMap = new HashMap<String, Object>();
         //获取所有商品信息总数
-        Integer totalCount = rentServiceImpl.selectTBySAutoCount(
+        Integer totalCount = rentService.selectTBySAutoCount(
                 searchGoodsInfo.getGamesName(),
                 searchGoodsInfo.getGamesServer(),
                 searchGoodsInfo.getGamesArea(),
@@ -176,7 +179,7 @@ public class DealController {
         reMap.put("goodsPageResult",goodsPageResult);
         //放置 交易页面 商品信息
         //商品信息展示
-        rentResultList = rentServiceImpl.selectTBySKey(
+        rentResultList = rentService.selectTBySKey(
                 searchGoodsInfo.getGamesName(),
                 searchGoodsInfo.getGamesServer(),
                 searchGoodsInfo.getGamesArea(),

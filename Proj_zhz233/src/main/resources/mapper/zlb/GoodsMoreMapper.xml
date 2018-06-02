@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhzteam.zhz233.mapper.zlb.GoodsMoreMapper">
+    <!-- 增加一条用户数据 -->
+    <insert id="insertTByKey" parameterType="com.zhzteam.zhz233.model.GoodsMoreModel">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert
+        into tab_goods_more(goods_no,game_name,
+        goods_role,goods_area,goods_server,goods_grade,goods_rank,
+        goods_access,goods_case,goods__skin,goods_hero)
+        values(#{goods_no},#{goods_game},
+        #{goods_role},#{goods_area},#{goods_server},#{goods_grade},#{goods_rank},
+        #{goods_access},#{goods_case},'无','无')
+    </insert>
+</mapper>

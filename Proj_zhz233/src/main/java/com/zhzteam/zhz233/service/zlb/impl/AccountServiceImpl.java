@@ -12,6 +12,12 @@ public class AccountServiceImpl implements AccountService {
     AccountMapper accountMapper;
 
     @Override
+    public Boolean insertTByKey(String accountNo) {
+        if(accountMapper.insertTByKey(accountNo) > 0)return true;
+        else return false;
+    }
+
+    @Override
     public AccountResult selectTByANO(String accountNo) {
         return accountMapper.selectTByANO(accountNo);
     }
@@ -27,7 +33,27 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void updateAvailableByPwdANo(Double money, String accountNo) {
-        accountMapper.updateAvailableByPwdANo(money, accountNo);
+    public void updateRechargeAvailableByANo(Double money, String accountNo) {
+        accountMapper.updateRechargeAvailableByANo(money, accountNo);
+    }
+
+    @Override
+    public void updateWithdrawAvailableByANo(Double money, String accountNo) {
+        accountMapper.updateWithdrawAvailableByANo(money, accountNo);
+    }
+
+    @Override
+    public void updateLByMoneyANo(Double available, Double frozen, String accountNo) {
+        accountMapper.updateLByMoneyANo(available, frozen, accountNo);
+    }
+
+    @Override
+    public void updateRByMoneyANo(Double available, Double frozen, String accountNo) {
+        accountMapper.updateRByMoneyANo(available, frozen, accountNo);
+    }
+
+    @Override
+    public void updateAvailableByANo(Double available, String accountNo) {
+        accountMapper.updateAvailableByANo(available, accountNo);
     }
 }

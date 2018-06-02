@@ -1,7 +1,9 @@
 package com.zhzteam.zhz233.service.zlb.impl;
 
 import com.zhzteam.zhz233.mapper.zlb.GoodsMapper;
+import com.zhzteam.zhz233.model.GoodsModel;
 import com.zhzteam.zhz233.model.zlb.GoodsLeaseResult;
+import com.zhzteam.zhz233.model.zlb.GoodsLeaseShow;
 import com.zhzteam.zhz233.model.zlb.GoodsResult;
 import com.zhzteam.zhz233.service.zlb.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,37 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public GoodsLeaseResult selectTByGoodsNo(String goodsNo) {
         return goodsMapper.selectTByGoodsNo(goodsNo);
+    }
+
+    @Override
+    public String selectTByAuto() {
+        return goodsMapper.selectTByAuto();
+    }
+
+    @Override
+    public Boolean insertTByKey(GoodsModel goodsModel) {
+        if(goodsMapper.insertTByKey(goodsModel) > 0) return true;
+        return false;
+    }
+
+    @Override
+    public List<GoodsLeaseShow> selectListTByANOType(Integer goodsType, String accountNo) {
+        return goodsMapper.selectListTByANOType(goodsType, accountNo);
+    }
+
+    @Override
+    public void updateTByGNo(Integer goodsStatus, String goodsNo) {
+        goodsMapper.updateTByGNo(goodsStatus, goodsNo);
+    }
+
+    @Override
+    public Integer selectGState(String goodsNo) {
+        return goodsMapper.selectGState(goodsNo);
+    }
+
+    @Override
+    public void deleteTByGNO(String goodsNo) {
+        goodsMapper.deleteTByGNO(goodsNo);
     }
 
 }

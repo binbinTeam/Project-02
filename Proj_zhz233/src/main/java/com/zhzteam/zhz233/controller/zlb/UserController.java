@@ -3,6 +3,7 @@ package com.zhzteam.zhz233.controller.zlb;
 import com.zhzteam.zhz233.common.config.*;
 import com.zhzteam.zhz233.common.utils.*;
 import com.zhzteam.zhz233.model.zlb.*;
+import com.zhzteam.zhz233.service.zlb.AccountService;
 import com.zhzteam.zhz233.service.zlb.impl.RedisServiceImpl;
 import com.zhzteam.zhz233.service.zlb.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,8 @@ import java.util.Map;
 public class UserController {
     @Autowired
     RedisServiceImpl redisServiceImpl;
-
+    @Autowired
+    AccountService accountService;
     @Autowired
     UserServiceImpl userServiceImpl;
 
@@ -191,8 +193,9 @@ public class UserController {
                                                     registerInfo.getCellphone(),
                                                     registerInfo.getPassword(),
                                                     autoNo);
-
-                                            if(registerFlag){//判断注册成功
+                                            //添加账户表
+                                            Boolean accountFlag = accountService.insertTByKey(autoNo);
+                                            if(registerFlag && accountFlag){//判断注册成功
                                                 userResult = userServiceImpl.selectTByKey(registerInfo.getUsername(), registerInfo.getPassword());
                                                 if(userResult != null) {//注册 登录用户
                                                     String uid= httpSession.getId();

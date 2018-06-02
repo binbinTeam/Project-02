@@ -11,6 +11,7 @@ public class GoodsModel implements Serializable {
     private String goods_game;
     private String goods_theme;//商品主题
     private String goods_content;//描述
+    private Double goods_amount;//商品单价
     private Integer goods_recomm;//商品等级( /0 个人认证/ 1 商家认证/ 2 个人商家认证 /3 特价商品 /4 测试认证)
     private Integer goods_status;//商品状态( 0 审核中/ 1已审核/ 2审核不通过/ 3已出租/ 4已预约/ 5已下架)
     private Date update_time;
@@ -70,6 +71,14 @@ public class GoodsModel implements Serializable {
 
     public void setGoods_content(String goods_content) {
         this.goods_content = goods_content;
+    }
+
+    public Double getGoods_amount() {
+        return goods_amount;
+    }
+
+    public void setGoods_amount(Double goods_amount) {
+        this.goods_amount = goods_amount;
     }
 
     public Integer getGoods_recomm() {

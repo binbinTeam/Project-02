@@ -4,11 +4,10 @@
     <!--selectTByKey-->
     <sql id="selectTByKey">
         SELECT order_no,goods_no,tab_user.account,
-          (select distinct account from tab_user,tab_lease_order
-          where tab_lease_order.buyer_no = tab_user.account_no)as 'buyer',
-          order_amount,
-          timestampdiff(hour,order_start_time,order_end_time) as 'order_time',
-          tab_lease_order.create_time
+          (select account from tab_user where tab_user.account_no = tab_lease_order.buyer_no)as'buyer',
+        order_amount,timestampdiff(hour,order_start_time,order_end_time)
+        as 'order_time',
+        tab_lease_order.create_time
         FROM tab_lease_order,tab_user
     </sql>
     <!--selectTByAuto-->
@@ -18,6 +17,92 @@
         ORDER BY create_time DESC,id desc
         LIMIT 1
     </sql>
+    <!--selectListTByANO-->
+    <sql id="selectListTByANO">
+        SELECT order_no,goods_no,tab_user.account,
+          (select distinct account from tab_user,tab_lease_order
+          where tab_lease_order.buyer_no = tab_user.account_no
+          and tab_lease_order.buyer_no = #{accountNo})as 'buyer',
+          order_amount,tab_lease_order.order_start_time as 'startTime',tab_lease_order.order_end_time as 'endTime',
+          timestampdiff(hour,order_start_time,order_end_time) as 'order_time',tab_lease_order.order_state as 'state',
+          tab_lease_order.create_time
+        FROM tab_lease_order,tab_user
+    </sql>
+    <!--deleteTByANO-->
+    <sql id="deleteTByANO">
+        delete from tab_lease_order
+    </sql>
+    <!--selectTByANO-->
+    <sql id="selectTByANO">
+        select tab_lease_order.order_no,tab_lease_order.goods_no,tab_lease_order.account_no,
+        tab_lease_order.buyer_no,tab_lease_order.order_amount,tab_lease_order.order_start_time,
+        tab_lease_order.order_end_time,tab_lease_order.order_state,tab_lease_order.create_time
+        from tab_lease_order
+    </sql>
+    <!--selectTByCNO-->
+    <select id="selectTByCNO" resultType="com.zhzteam.zhz233.model.zlb.LeaseOrderShow">
+        <include refid="selectListTByANO"/>
+        where tab_user.account_no = tab_lease_order.account_no
+        and tab_lease_order.order_no = #{orderNo}
+        and tab_lease_order.account_no = #{accountNo}
+    </select>
+    <!--selectTByBNO-->
+    <select id="selectTByBNO" resultType="com.zhzteam.zhz233.model.zlb.LeaseOrderShow">
+        <include refid="selectListTByANO"/>
+        where tab_user.account_no = tab_lease_order.buyer_no
+        and tab_lease_order.order_no = #{orderNo}
+        and tab_lease_order.buyer_no = #{accountNo}
+    </select>
+    <!--updateTByANO-->
+    <update id="updateTByANO">
+        update tab_lease_order
+        set tab_lease_order.order_state = #{state}
+        where tab_lease_order.order_no = #{orderNo}
+        and tab_lease_order.buyer_no = #{accountNo}
+    </update>
+    <!--updateTByMANO-->
+    <update id="updateTByMANO">
+        update tab_lease_order
+        set tab_lease_order.order_state = #{orderState}
+        where tab_lease_order.order_no = #{orderNo}
+        and tab_lease_order.account_no = #{accountNo}
+    </update>
+    <!--selectTByANO-->
+    <select id="selectTByANO" resultType="com.zhzteam.zhz233.model.zlb.LeaseOrderInfoResult">
+        <include refid="selectTByANO"/>
+        where tab_lease_order.order_no = #{orderNo}
+        and tab_lease_order.buyer_no = #{accountNo}
+    </select>
+    <!--selectTByMANO-->
+    <select id="selectTByMANO" resultType="com.zhzteam.zhz233.model.zlb.LeaseOrderInfoResult">
+        <include refid="selectTByANO"/>
+        where tab_lease_order.order_no = #{orderNo}
+        and tab_lease_order.account_no = #{accountNo}
+    </select>
+    <!--deleteTByANO-->
+    <delete id="deleteTByANO">
+        <include refid="deleteTByANO"/>
+        where tab_lease_order.order_no = #{orderNo}
+        and tab_lease_order.buyer_no = #{accountNo}
+    </delete>
+    <!--deleteTByMANO-->
+    <delete id="deleteTByMANO">
+        <include refid="deleteTByANO"/>
+        where tab_lease_order.order_no = #{orderNo}
+        and tab_lease_order.account_no = #{accountNo}
+    </delete>
+    <!--selectListTByANO-->
+    <select id="selectListTByANO" resultType="com.zhzteam.zhz233.model.zlb.LeaseOrderShow">
+        <include refid="selectListTByANO"/>
+        where tab_user.account_no = tab_lease_order.buyer_no
+        and tab_lease_order.buyer_no = #{accountNo}
+    </select>
+    <!--selectListTByMANO-->
+    <select id="selectListTByMANO" resultType="com.zhzteam.zhz233.model.zlb.LeaseOrderShow">
+        <include refid="selectListTByANO"/>
+        where tab_user.account_no = tab_lease_order.account_no
+        and tab_lease_order.account_no = #{accountNo}
+    </select>
     <!--insertTByKey-->
     <insert id="insertTByKey" parameterType="com.zhzteam.zhz233.model.zlb.LeaseOrderInfo">
         <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">

@@ -15,8 +15,8 @@ public class DownloadController {
     @RequestMapping(value = "/download")
     @ResponseBody
     public String download(HttpServletRequest request, HttpServletResponse response) {
-        String pathName =  "G:\\Zhz233File\\";
-        String fileName = "UpperDevice2018.05.20.0001.zip";
+        String pathName =  "G:\\Zhz233File\\Upper\\";
+        String fileName = "UpperDevice2018.05.20.0001.7z";
         if(DownloadUtils.downloadFile(request,response,pathName,fileName)) return "下载成功！";
         else return "下载失败！";
     }

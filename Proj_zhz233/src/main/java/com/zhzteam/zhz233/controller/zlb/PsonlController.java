@@ -1,9 +1,6 @@
 package com.zhzteam.zhz233.controller.zlb;
 
-import com.zhzteam.zhz233.common.config.FileConfig;
-import com.zhzteam.zhz233.common.config.RedisConfig;
-import com.zhzteam.zhz233.common.config.SMSConfig;
-import com.zhzteam.zhz233.common.config.StatusConfig;
+import com.zhzteam.zhz233.common.config.*;
 import com.zhzteam.zhz233.common.utils.AutoIncUtils;
 import com.zhzteam.zhz233.common.utils.REVUtils;
 import com.zhzteam.zhz233.common.utils.SMSUtils;
@@ -41,6 +38,8 @@ public class PsonlController {
     FileURLService fileURLService;
     @Autowired
     RechargeService rechargeService;
+    @Autowired
+    WithdrawService withdrawService;
 
     private ResultView resultView;
     private AccountResult accountResult;
@@ -59,6 +58,42 @@ public class PsonlController {
         return resultView;
     }
 
+    @RequestMapping(value = "/withdraw")
+    public ResultView withdraw(@RequestParam("money") Double money,
+                               @RequestParam("uid") String uid){
+        resultView = new ResultView();
+        accountResult = new AccountResult();
+        String accountNo = redisService.select(uid);
+        if(money != null && accountNo != null){
+            accountResult = accountService.selectTByANO(accountNo);
+            if(accountResult != null && accountResult.getCertification() == 1 && accountResult.getAvailable() >= money){//验证信息有效性
+                //invlaService
+                accountService.updateWithdrawAvailableByANo(money,accountNo);
+                //获取 Old Invla No
+                String oldInvlaNo = invlaService.selectTByAuto();
+                String newInvlaNo = AutoIncUtils.getInvlaOrderNo(oldInvlaNo);
+                invlaService.insertTByKey(newInvlaNo,accountNo,3,money);
+                //Withdraw  Order
+                Double withdrawCharge = ZHZConfig.WITHDRAWALRATE * money;
+                String withdrawRemark = "提现率为：" + ZHZConfig.WITHDRAWALRATE.toString();
+                String oldWithdrawNo = withdrawService.selectTByAuto();
+                String newWithdrawNo = AutoIncUtils.getWithdrawOrderNo(oldWithdrawNo);
+                withdrawService.insertTByKey(newWithdrawNo,accountNo,3,money,withdrawCharge,withdrawRemark,2);
+                //
+                //存储 金额
+                //订单 充值
+                resultView.setStatus(StatusConfig.SUCCESS);
+                resultView.setMessage("提现成功！");
+            }else {
+                resultView.setStatus(StatusConfig.FAIL);
+                resultView.setMessage("提现失败！");
+            }
+        }else {
+            resultView.setStatus(StatusConfig.FAIL);
+            resultView.setMessage("提现错误！");
+        }
+        return resultView;
+    }
 
     @RequestMapping(value = "/recharge")
     public ResultView recharge(@RequestParam("money") Double money,
@@ -70,7 +105,7 @@ public class PsonlController {
             accountResult = accountService.selectTByANO(accountNo);
             if(accountResult != null && accountResult.getCertification() == 1){//验证信息有效性
                 //invlaService
-                accountService.updateAvailableByPwdANo(money,accountNo);
+                accountService.updateRechargeAvailableByANo(money,accountNo);
                 //获取 Old Invla No
                 String oldInvlaNo = invlaService.selectTByAuto();
                 String newInvlaNo = AutoIncUtils.getInvlaOrderNo(oldInvlaNo);

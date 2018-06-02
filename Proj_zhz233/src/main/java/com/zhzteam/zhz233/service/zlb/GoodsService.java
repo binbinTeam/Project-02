@@ -1,6 +1,8 @@
 package com.zhzteam.zhz233.service.zlb;
 
+import com.zhzteam.zhz233.model.GoodsModel;
 import com.zhzteam.zhz233.model.zlb.GoodsLeaseResult;
+import com.zhzteam.zhz233.model.zlb.GoodsLeaseShow;
 import com.zhzteam.zhz233.model.zlb.GoodsRentMoreResult;
 import com.zhzteam.zhz233.model.zlb.GoodsResult;
 
@@ -34,4 +36,40 @@ public interface GoodsService {
      * @return
      */
     public GoodsLeaseResult selectTByGoodsNo(String goodsNo);
+    /**
+     * 获取自增 NO
+     * @return
+     */
+    public String selectTByAuto();
+    /**
+     * 添加 商品
+     * @param goodsModel
+     * @return
+     */
+    public Boolean insertTByKey(GoodsModel goodsModel);
+    /**
+     * 查询 个人 发布商品信息
+     * @param goodsType
+     * @param accountNo
+     * @return
+     */
+    public List<GoodsLeaseShow> selectListTByANOType(Integer goodsType, String accountNo);
+    /**
+     * 更新商品状态
+     * @param goodsStatus
+     * @param goodsNo
+     */
+    public void updateTByGNo( Integer goodsStatus, String goodsNo);
+    /**
+     * 获取状态
+     * @param goodsNo
+     * @return
+     */
+    public Integer selectGState(String goodsNo);
+
+    /**
+     * 删除记录
+     * @param goodsNo
+     */
+    public void deleteTByGNO(String goodsNo);
 }

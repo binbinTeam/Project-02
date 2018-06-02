@@ -10,6 +10,34 @@
         goods_credit_level
         from tab_goods,tab_user,tab_goods_rent
     </sql>
+    <!--selectTByANO-->
+    <sql id="selectTByANO">
+        select goods_no,goods_compensate,goods_credit_level
+        from tab_goods_rent
+    </sql>
+    <!--selectTByANO-->
+    <select id="selectTByANO" resultType="com.zhzteam.zhz233.model.zlb.GoodsRentResult">
+        <include refid="selectTByANO"/>
+        where goods_no = #{goodsNo}
+    </select>
+    <!-- 增加一条用户数据 -->
+    <insert id="insertTByKey" parameterType="com.zhzteam.zhz233.model.GoodsRentModel">
+        <selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert
+        into tab_goods_rent(goods_no,goods_game,
+        goods_hour,goods_night,goods_day,goods_week,goods_month,
+        goods_year,goods_access,goods_password,goods_logon_style,
+        goods_compensate,goods_beforehand,goods_delay,goods_short_time,
+        goods_credit_level,goods_view_count,goods_rent_count,goods_recomm_count,
+        goods_complaint_count)
+        values(#{goods_no},#{goods_game},
+        #{goods_hour},#{goods_night},#{goods_day},#{goods_week},#{goods_month},
+        #{goods_year},#{goods_access},#{goods_password},#{goods_logon_style},
+        #{goods_compensate},#{goods_beforehand},#{goods_delay},#{goods_short_time},
+        #{goods_credit_level},0,0,0,0)
+    </insert>
     <!--selectTByKey-->
     <select id="selectTByKey" resultType="com.zhzteam.zhz233.model.zlb.GoodsRentResult">
         <include refid="selectTByKey"/>

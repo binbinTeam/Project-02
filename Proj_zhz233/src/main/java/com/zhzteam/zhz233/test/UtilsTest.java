@@ -3,13 +3,74 @@ package com.zhzteam.zhz233.test;
 import com.zhzteam.zhz233.common.utils.*;
 import com.zhzteam.zhz233.model.JWTModel;
 import com.zhzteam.zhz233.model.zlb.JWTResult;
+import com.zhzteam.zhz233.model.zlb.SMSResult;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class UtilsTest {
+
+    @Test
+    public void Test13(){
+        WebDriver webDriver = Schedul4399Utils.Schedul4399("binbin201806","QQ109ZL2");
+        Schedul4399Utils.closeWebDriver(webDriver);
+    }
+
+    @Test
+    public void Test12(){
+        System.setProperty("webdriver.gecko.driver", "G:\\Zhz233File\\Driver\\32\\geckodriver.exe");
+        System.setProperty("webdriver.firefox.bin","D:\\Program Files\\Firefox\\firefox.exe");
+        WebDriver webDriver = new FirefoxDriver();
+        webDriver.manage().window().maximize();
+        webDriver.manage().deleteAllCookies();
+        // 与浏览器同步非常重要，必须等待浏览器加载完毕
+        webDriver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        try {
+            webDriver.get("http://www.4399.com/");
+            WebElement btnLoginBox = webDriver.findElement(By.id("login_tologin"));
+            btnLoginBox.click();
+            webDriver.switchTo().frame(0);
+            WebElement usernameBox = webDriver.findElement(By.id("username"));
+            WebElement passwordBox = webDriver.findElement(By.id("password"));
+            usernameBox.sendKeys("binbin201806");
+            passwordBox.sendKeys("QQ109ZL2");
+            WebElement submitBtn = webDriver.findElement(By.className("ptlogin_btn"));
+            submitBtn.click();
+        }catch (NoSuchElementException e){
+            webDriver.close();
+        }catch (Exception e){
+            webDriver.close();
+        }
+    }
+
+
+
+
+    @Test
+    public void Test11(){
+        SMSResult smsResult= new SMSResult();
+        String MSG = SMSUtils.createCodeMsg("123123");
+        smsResult = SMSUtils.execute("15123328416",MSG);
+        System.err.println(smsResult.getRespCode());
+        System.err.println(smsResult.getFailCount());
+        System.err.println(smsResult.getRespDesc());
+        System.err.println(smsResult.getSmsId());
+    }
+    @Test
+    public void Test10(){
+        Date b = new Date(0);
+        Date c = new Date(1);
+        System.err.println(c.after(b));
+        System.err.println(DateTimeUtils.After(b));
+    }
     @Test
     public void Test9(){
         //System.err.println(AutoIncUtils.getFileURLNo(""));
